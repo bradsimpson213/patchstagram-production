@@ -1,4 +1,4 @@
-from .db import db, SCHEMA, add_prefix_for_prod
+from .db import db, SCHEMA, add_prefix_for_prod, environment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .like import likes
