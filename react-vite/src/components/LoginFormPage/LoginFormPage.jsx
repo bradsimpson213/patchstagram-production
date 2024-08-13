@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./LoginForm.css";
+
 
 function LoginFormPage() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function LoginFormPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  // if (sessionUser) return <Navigate to="/" replace={true} />;
+  // if (sessionUser) return <Navigate to="/feed" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,35 +33,49 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className="login-container">
+      <h1 className="login-title">Log In</h1>
       {errors.length > 0 &&
         errors.map((message) => <p key={message}>{message}</p>)}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
+      <form 
+        onSubmit={ handleSubmit }
+        className="login-form"
+      >
+        <label className="login-form-label">
+          Email:
           <input
             type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={ email }
+            placeholder="email"
+            onChange={ (e) => setEmail(e.target.value) }
             required
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
-        <label>
-          Password
+        <label className="login-form-label">
+          Password:
           <input
             type="password"
             value={password}
+            placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        <button 
+          className="login-form-button" 
+          type="submit"
+          >
+            Log In
+          </button>
       </form>
-    </>
+      <span className="login-singup-wrapper">
+        Don&apos;t have an account?  Then head over to the <Link to="/signup">Sign Up</Link> page.
+      </span>
+    </div>
   );
 }
 
 export default LoginFormPage;
+
