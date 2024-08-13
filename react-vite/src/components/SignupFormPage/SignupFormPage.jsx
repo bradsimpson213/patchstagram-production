@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
 import "./SignupForm.css"
 
@@ -60,6 +60,7 @@ function SignupFormPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="email@domain.ext"
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
@@ -70,26 +71,29 @@ function SignupFormPage() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder="user1234"
           />
         </label>
         {errors.username && <p>{errors.username}</p>}
         <label className="signup-form-label">
-          ProfileImage:
+          Profile Image:
           <input
             type="text"
             value={profileImage}
             onChange={(e) => setProfileImage(e.target.value)}
+            placeholder="https://my-photo-site.com"
           />
         </label>
+        {errors.profileImage && <p>{errors.profileImage}</p>}
         <label className="signup-form-label">
-          Biography: (250 char max)
+          Biography:
           <textarea
             type="text"
             value={ bio }
             onChange={(e) => setBio(e.target.value)}
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.bio && <p>{errors.bio}</p>}
         <label className="signup-form-label">
           Password:
           <input
@@ -110,8 +114,16 @@ function SignupFormPage() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button 
+          type="submit"
+          className="signup-form-button"
+        >
+          Sign Up
+        </button>
       </form>
+      <span className="signup-login-wrapper">
+        Already have an account?  Then head over to the <Link to="/login">Log In</Link> page.
+      </span>
     </div>
   );
 }

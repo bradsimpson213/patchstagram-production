@@ -76,3 +76,9 @@
     text-decoration: underline;
     text-decoration-color: orange;
 }
+
+.login-singup-wrapper a:hover {
+    color: orange;
+    text-decoration: underline;
+    text-decoration-color: whitesmoke;
+}

@@ -16,10 +16,10 @@
     font-family: Billabong;
     width: 70vw;
     text-align: center;
-    font-weight: bold;
+    font-weight: 300;
     font-size: 5rem;
-    text-shadow: rgb(255, 165, 0) -1px 1px 0px, 
-    rgb(255, 165, 0) 1px 1px 0px; 
+    text-shadow: rgb(255, 165, 0) -2px 2px 0px, 
+    rgb(255, 165, 0) 2px 2px 0px; 
 }
 
 .landing-image {
@@ -53,4 +53,5 @@
 
 .landing-link:hover {
     text-decoration-color: whitesmoke;
+    color: orange;
 }

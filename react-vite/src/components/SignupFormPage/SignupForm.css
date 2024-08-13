@@ -26,7 +26,7 @@
     border: 2px solid whitesmoke;
     border-radius: 12px;
     padding: 20px;
-    min-width: 200px;
+    min-width: 300px;
 }
 
 .signup-form-label {
@@ -46,4 +46,50 @@
     width: 100%;
     height: 30px;
     text-align: center;
+}
+
+.signup-form-label textarea {
+    background-color: rgb(37, 48, 59);
+    border: 1px solid whitesmoke;
+    border-radius: 12px;
+    color: whitesmoke;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+}
+
+.signup-form-button {
+    color: whitesmoke;
+    background-color: rgb(37, 48, 59);
+    border: 2px solid orange;
+    border-radius: 12px;
+    font-family: IndieFlower;
+    font-size: 2em;
+    margin-top: 25px;
+    padding: 5px 15px 5px 15px;
+    margin-bottom: 10px;
+}
+
+.signup-form-button:hover {
+    color: lightblue;
+    border-color: whitesmoke;
+}
+
+.signup-login-wrapper {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.signup-login-wrapper a {
+    color: lightblue;
+    text-decoration: underline;
+    text-decoration-color: orange;
+}
+
+.signup-login-wrapper a:hover {
+    color: orange;
+    text-decoration: underline;
+    text-decoration-color: whitesmoke;
 }
