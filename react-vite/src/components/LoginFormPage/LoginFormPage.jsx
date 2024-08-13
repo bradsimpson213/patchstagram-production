@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
-import { useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import "./LoginForm.css";
 
 
 function LoginFormPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  // if (sessionUser) return <Navigate to="/feed" replace={true} />;
+  if (sessionUser) return <Navigate to="/feed" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ function LoginFormPage() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      navigate("/");
+      navigate("/feed");
     }
   };
 
@@ -46,7 +46,7 @@ function LoginFormPage() {
           <input
             type="text"
             value={ email }
-            placeholder="email"
+            placeholder="email@domain.ext"
             onChange={ (e) => setEmail(e.target.value) }
             required
           />

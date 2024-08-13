@@ -3,6 +3,7 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Landing from '../components/Landing';
 import Layout from './Layout';
+import Feed from '../components/Feed';
 
 export const router = createBrowserRouter([
   {
@@ -21,10 +22,10 @@ export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      // {
-      //   path: 'feed',
-      //   element: <Feed />
-      // },
+      {
+        path: 'feed',
+        element: <Feed />
+      },
     ],
   },
 ]);
