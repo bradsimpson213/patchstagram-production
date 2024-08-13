@@ -1,12 +1,12 @@
 /* TODO: Add sitewide styles */
 @font-face {
     font-family: Billabong;
-    src: url('./fonts/Billabong.ttf');
+    src: url('./assets/fonts/Billabong.ttf');
 }
 
 @font-face {
     font-family: IndieFlower;
-    src: url('./fonts/IndieFlower.ttf');
+    src: url('./assets/fonts/IndieFlower.ttf');
 }
 
 body {
