@@ -1,4 +1,4 @@
-from app.models import db, Post, User
+from app.models import db, Post, User, environment, SCHEMA
 from random import choice, sample, randint
 from sqlalchemy.sql import text
 from faker import Faker
