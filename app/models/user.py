@@ -53,11 +53,3 @@ class User(db.Model, UserMixin):
 
         return dict_user
 
-    # def to_dict_no_posts(self):
-    #     return {
-    #         "id": self.id,
-    #         "username": self.username,
-    #         "profilePic": self.profile_pic,
-    #         "bio": self.bio,
-    #         "likes": len(self.user_likes)
-    #     }

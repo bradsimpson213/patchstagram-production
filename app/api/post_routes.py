@@ -1,31 +1,25 @@
 from flask import Blueprint, render_template, redirect, flash
-from ..posts import posts as seed_posts
 from ..forms.post_form import PostForm
 from datetime import date
 from random import randint
 from ..models import db, Post, User
 
 
-posts = Blueprint('posts', __name__)
+post_routes = Blueprint('posts', __name__)
 
 
-# print("in posts bp", __name__)
-
-# "/posts/all"
-@posts.route("/all")
+@post_routes.route("/all")
 def get_all_posts():
-    """route the queries for all posts and then returns them in a template"""
-    # QUERY IN HERE
+    """route that queries for all posts and then returns them in JSON"""
+    print("WE WERE HERE!!!")
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
-    # print(all_posts)
+    print(all_posts)
     view_posts = [post.to_dict() for post in all_posts]
-    print(view_posts)
-    # sorted_posts = sorted(seed_posts, key=lambda post: post["date"], reverse=True)
-    return render_template('feed.html', posts=all_posts)
-    # return view_posts
+    print("all posts", view_posts)
+    return {"posts": view_posts }
 
 
-@posts.route("/<int:id>")
+@post_routes.route("/<int:id>")
 def get_post_by_id(id):
     """return a single post by its id"""
     one_post = Post.query.get(id)
@@ -35,7 +29,7 @@ def get_post_by_id(id):
 
 
 
-@posts.route("/new", methods=["GET", "POST"])
+@post_routes.route("/new", methods=["GET", "POST"])
 def create_new_post():
     """render an empty form on get requests, validates and submits form on post requests"""
 
@@ -68,7 +62,7 @@ def create_new_post():
 
 
 
-@posts.route("/update/<int:id>", methods=["GET", "POST"])
+@post_routes.route("/update/<int:id>", methods=["GET", "POST"])
 def update_post(id):
     """"will generate an update post form on get requests and 
     validate/save on post requests"""
@@ -101,7 +95,7 @@ def update_post(id):
 
 
 
-@posts.route("/delete/<int:id>")
+@post_routes.route("/delete/<int:id>")
 def delete_post(id):
     """will delete a given post by its ID"""
     # post_to_delete = [post for post in seed_posts if post["id"] == id]

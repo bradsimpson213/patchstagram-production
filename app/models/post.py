@@ -35,8 +35,8 @@ class Post(db.Model):
             "id": self.id,
             "caption": self.caption,
             "image": self.image,
-            "postData": self.post_date,
+            "postDate": self.post_date,
             "likes": len(self.post_likes),
-            "user": self.user.to_dict_no_posts()
+            "user": self.user.to_dict()
         }
 

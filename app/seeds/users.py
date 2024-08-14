@@ -7,7 +7,7 @@ def seed_users():
     demo = User(
             username='Demo', 
             email='demo@gmail.com',
-            profile_pic="",
+            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1647912257/Patchstagram/IMG_3074_ubqe1e.jpg",
             bio="I am the demo user!", 
             password='password')
     

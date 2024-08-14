@@ -1,10 +1,26 @@
+import { useSelector, useDispatch } from "react-redux";
+import { getAllPosts } from "../../redux/postsReducer";
+import { useEffect } from "react";
+import Post from "../Post";
 import "./Feed.css"
 
 
 export default function Feed () {
-    return (
-        <>
-            <h1>FEED HERE</h1>
-        </>
+    const dispatch = useDispatch()
+    const postsObj = useSelector( state => state.posts)
+    const posts = Object.values(postsObj)
+
+    useEffect( () => {
+        dispatch(getAllPosts())
+    }, [])
+
+    if (!posts) return null
+
+    return(
+        <div className="feed-container">
+            { posts.map(post => (
+                <Post data={ post } key={ post.id } />
+              )) }
+        </div>
     )
 }
