@@ -25,6 +25,7 @@ export default function Post ({ data })  {
                     className="content-image" 
                 />
             </div>
+            <div></div>
         </div>
     )
 }

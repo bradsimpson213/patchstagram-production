@@ -12,7 +12,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* border-bottom: 1px solid white; */
     padding-right: 10px;
     font-family: IndieFlower;
     font-size: 1.4em;
@@ -24,6 +23,7 @@
     align-items: center;
     justify-content: center;
     font-family: IndieFlower;
+    text-align: start;
 }
 
 .user-info {
