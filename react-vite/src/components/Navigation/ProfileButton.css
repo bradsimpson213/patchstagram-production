@@ -6,9 +6,32 @@
 
 
 .profile-dropdown {
+    position: absolute;
+    width: 13em;
+    top: 3em;
+    right: 3em;
     background-color: rgb(37, 48, 59);
     border: 2px solid whitesmoke;
     border-radius: 12px;
     color: whitesmoke;
-    padding: 10px;
+    font-family: IndieFlower;
+    font-size: 1.3em;
+    padding: 15px;
+    margin: 10px;
+}
+
+.logout-form-button {
+    color: whitesmoke;
+    background-color: rgb(37, 48, 59);
+    border: 2px solid orange;
+    border-radius: 12px;
+    font-family: IndieFlower;
+    font-size: 1.3em;
+    margin-top: 25px;
+    padding: 5px 15px 5px 15px;
+}
+
+.logout-form-button:hover {
+    color: lightblue;
+    border-color: whitesmoke;
 }
