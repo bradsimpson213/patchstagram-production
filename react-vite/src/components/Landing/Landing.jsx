@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import "./Landing.css"
+import Footer from "../Footer"
 
 
 export default function Landing () {
@@ -26,6 +27,7 @@ export default function Landing () {
                     Sign Up
                 </Link>
             </div>
+            <Footer />
         </div>
     )
 }

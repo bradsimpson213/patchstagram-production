@@ -45,6 +45,7 @@ class User(db.Model, UserMixin):
         dict_user = {
             "id": self.id,
             "username": self.username,
+            "email": self.email,
             "profilePic": self.profile_pic,
             "bio": self.bio,
         }
