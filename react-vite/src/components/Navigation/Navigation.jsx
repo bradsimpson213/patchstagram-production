@@ -1,17 +1,19 @@
 import { NavLink, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { useThemeContext } from "../../context/ThemeContext";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
+  const { theme } = useThemeContext()
 
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   return (
-    <div className="navbar-container">
+    <div className={`navbar-container ${theme}`}>
         <Link to="/" style={{textDecoration: "none"}}>
           <div className="navbar-subcontainer">
             <img

@@ -13,3 +13,17 @@ body {
     box-sizing: border-box;
     margin: 0px;
 }
+
+.light {
+    background-color: tan;
+    color: rgb(109, 69, 19);
+    border-color:  rgb(109, 69, 19);
+    border-bottom-color:  rgb(109, 69, 19);
+  }
+  
+  .dark {
+    background-color: rgb(37, 48, 59);
+    color: whitesmoke;
+    border-color: whitesmoke;
+    border-bottom-color: whitesmoke;
+  }

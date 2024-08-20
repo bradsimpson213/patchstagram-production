@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegUserCircle } from "react-icons/fa";
 import { thunkLogout } from "../../redux/session";
+import { useThemeContext } from "../../context/ThemeContext";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -14,6 +15,7 @@ function ProfileButton() {
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+  const { theme } = useThemeContext()
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -46,12 +48,12 @@ function ProfileButton() {
     <>
       <button 
         onClick={ toggleMenu }
-        className="profile-button"
+        className={`profile-button ${theme}`}
       >
         <FaRegUserCircle />
       </button>
       {showMenu && (
-        <div className={"profile-dropdown"} ref={ulRef}>
+        <div className={`profile-dropdown ${theme}`} ref={ulRef}>
           {user ? (
             <>
               <p>User: {user.username}</p>

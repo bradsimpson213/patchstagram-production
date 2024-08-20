@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
+import ThemeProvider from "./context/ThemeContext";
 import configureStore from "./redux/store";
 import { router } from "./router";
 import * as sessionActions from "./redux/session";
@@ -17,7 +18,9 @@ if (import.meta.env.MODE !== "production") {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ReduxProvider>
   </React.StrictMode>
 );

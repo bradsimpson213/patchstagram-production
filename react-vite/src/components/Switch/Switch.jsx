@@ -1,14 +1,12 @@
 import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
-import { useState } from "react";
-// import { useContext } from 'react'
+import { useThemeContext } from "../../context/ThemeContext";
 import './Switch.css';
 
 
 export default function Switch() {
+    const { theme, setTheme } = useThemeContext()
     // const { theme, setTheme } = useThemeContext()
-    const [theme, setTheme] = useState("dark")
-
     return (
         <div className="theme-switch-container">
             { theme == "dark" ?
