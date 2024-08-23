@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { thunkSignup } from "../../redux/session";
+import DemoUser from "../DemoUser/DemoUser";
 import "./SignupForm.css"
 
 
@@ -120,6 +121,7 @@ function SignupFormPage() {
         >
           Sign Up
         </button>
+        <DemoUser />
       </form>
       <span className="signup-login-wrapper">
         Already have an account?  Then head over to the <Link to="/login">Log In</Link> page.

@@ -1,0 +1,20 @@
+.demouser-container {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.demouser-button {
+    border: none;
+    font-size: 1.2em;
+    font-family: IndieFlower;
+    background-color: inherit;
+    color: inherit;
+    margin: 10px;
+}
+
+.demouser-button:hover {
+    font-size: 1.4em;
+    text-decoration: underline;
+}
