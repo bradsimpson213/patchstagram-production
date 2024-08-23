@@ -3,7 +3,6 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 import "./LoginForm.css";
-import Footer from "../Footer";
 
 
 function LoginFormPage() {

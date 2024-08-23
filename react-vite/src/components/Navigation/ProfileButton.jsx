@@ -61,7 +61,7 @@ function ProfileButton() {
               <Switch />
               <button 
                 onClick={ logout }
-                className="logout-form-button"
+                className={`profile-dropdown ${theme}`}
               >
                 Log Out
               </button>
