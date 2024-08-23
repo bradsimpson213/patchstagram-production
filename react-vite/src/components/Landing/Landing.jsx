@@ -1,9 +1,22 @@
-import { Link } from "react-router-dom"
+import { useEffect } from "react";
+import { Link, Navigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux";
+import { thunkAuthenticate } from "../../redux/session";
 import "./Landing.css"
 import Footer from "../Footer"
 
 
 export default function Landing () {
+    const dispatch = useDispatch()
+    const sessionUser = useSelector((state) => state.session.user);
+
+    useEffect(() => {
+        dispatch(thunkAuthenticate());
+      }, [dispatch]);
+      
+    if (sessionUser) return <Navigate to="/feed" replace={true} />;
+
+
     return(
         <div className="landing-container">
             <h1 className="landing-title">Welcome to Patchstagram!</h1>

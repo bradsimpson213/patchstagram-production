@@ -12,7 +12,7 @@ export default function Feed () {
 
     useEffect( () => {
         dispatch(getAllPosts())
-    }, [])
+    }, [dispatch])
 
     if (!posts) return null
 
