@@ -1,8 +1,10 @@
+
+import { FaHeart, FaRegHeart, FaRegComment  } from "react-icons/fa";
 import "./Post.css"
 
 
 export default function Post ({ data })  {
-    const { caption, user, image, postDate } = data
+    const { caption, user, image, postDate, likes } = data
    
     return (
         <div className={`post-container`}>
@@ -18,14 +20,19 @@ export default function Post ({ data })  {
                 <h3>{ postDate }</h3>
             </div>
             <div className="post-body">
-                <h2>{ caption }</h2>
                 <img 
                     src={ image } 
-                    alt="main-post-iamge"
+                    alt="post-content"
                     className="content-image" 
                 />
+                <h2>{ caption }</h2>
             </div>
-            <div></div>
+            <div className="post-footer">
+                <FaRegHeart />
+                { likes && <span>{ likes.length }</span> }
+                <FaRegComment />
+                <span></span>
+            </div>
         </div>
     )
 }

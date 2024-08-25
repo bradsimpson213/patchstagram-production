@@ -1,5 +1,5 @@
 .navbar-container {
-  height: 10vh;
+  height: 7.5vh;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -21,6 +21,7 @@
   height: 75px;
   width:  75px;
   margin-right: 25px;
+  margin-bottom: 15px;
 }
 
 .navbar-title {
