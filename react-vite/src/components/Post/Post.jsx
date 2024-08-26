@@ -1,6 +1,6 @@
 
 import { useSelector } from "react-redux";
-import { FaHeart, FaRegHeart, FaRegComment  } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaRegComment, FaEdit, FaTrashAlt } from "react-icons/fa";
 import "./Post.css"
 
 
@@ -32,14 +32,32 @@ export default function Post ({ data })  {
                 <h2>{ caption }</h2>
             </div>
             <div className="post-footer">
-                { likes.length && sessionUser ? (likes.includes(sessionUser.id)) 
-                        ? <FaHeart style={{color: "red"}} />
-                        :<FaRegHeart /> 
-                    : <FaRegHeart />
+                <div className="post-likecomment-container">
+                    { likes.length && sessionUser 
+                        ? 
+                            (likes.includes(sessionUser.id)) 
+                                ?   <FaHeart style={{color: "red"}} />
+                                :   <FaRegHeart /> 
+                        : <FaRegHeart />
+                    }
+                    { likes.length 
+                        ? 
+                            <span>{ likes.length }</span> 
+                        : 
+                            <span></span> 
+                    }
+                    <FaRegComment />
+                    <span>1</span>
+                </div>
+                { sessionUser.id === user.id 
+                    ?
+                        <div className="post-editdelete-container">
+                            <FaEdit />
+                            <FaTrashAlt />
+                        </div>
+                    : 
+                        null 
                 }
-                { likes.length ? <span>{ likes.length }</span> : <span></span> }
-                <FaRegComment />
-                <span></span>
             </div>
         </div>
     )

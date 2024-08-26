@@ -3,7 +3,9 @@
     border-width: 2px;
     border-style: solid;
     border-radius: 12px;
-    width: 600px;
+    /* width: 600px; */
+    max-width: 600px;
+    min-width: 200px;
     margin: 15px 5px 15px 5px;
 }
 
@@ -61,7 +63,7 @@
 .post-footer {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2em;
@@ -70,4 +72,22 @@
 
 .post-footer span {
     margin: 0px 10px 0px 10px;
+}
+
+.post-likecomment-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.post-editdelete-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.post-editdelete-container svg {
+    margin-right: 10px;
 }
