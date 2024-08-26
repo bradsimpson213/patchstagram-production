@@ -23,15 +23,16 @@
 }
 
 .landing-image {
-    height: 30vw;
+    height: 15em;
 }
 
 .landing-subtitle {
     font-family: IndieFlower;
     color: whitesmoke;
-    width: 50vw;
+    width: 60vw;
+
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.7em;
     margin: 10px;
 }
 

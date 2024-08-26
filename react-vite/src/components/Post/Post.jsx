@@ -1,11 +1,15 @@
 
+import { useSelector } from "react-redux";
 import { FaHeart, FaRegHeart, FaRegComment  } from "react-icons/fa";
 import "./Post.css"
 
 
 export default function Post ({ data })  {
     const { caption, user, image, postDate, likes } = data
-   
+    const sessionUser = useSelector((state) => state.session.user);
+    console.log("LIKES",likes)
+    console.log("CUID", sessionUser.id)
+
     return (
         <div className={`post-container`}>
             <div className="post-header">
@@ -28,8 +32,12 @@ export default function Post ({ data })  {
                 <h2>{ caption }</h2>
             </div>
             <div className="post-footer">
-                <FaRegHeart />
-                { likes && <span>{ likes.length }</span> }
+                { likes.length && sessionUser ? (likes.includes(sessionUser.id)) 
+                        ? <FaHeart style={{color: "red"}} />
+                        :<FaRegHeart /> 
+                    : <FaRegHeart />
+                }
+                { likes.length ? <span>{ likes.length }</span> : <span></span> }
                 <FaRegComment />
                 <span></span>
             </div>
