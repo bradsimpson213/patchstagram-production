@@ -25,9 +25,7 @@ export default function Feed () {
         if (new Date(a.postDate) === new Date(b.postDate)) return 0;
     };
     const sortedPosts = posts.sort(compare)
-    console.log("sorted posts", sortedPosts)
-
-
+   
     return(
         <div className={`feed-container ${theme}`}>
             { sortedPosts.map(post => (

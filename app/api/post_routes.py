@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, flash
 from ..forms.post_form import PostForm
+from flask_login import login_required, current_user
 from datetime import date
 from random import randint
 from ..models import db, Post, User
@@ -11,31 +12,31 @@ post_routes = Blueprint('posts', __name__)
 @post_routes.route("/all")
 def get_all_posts():
     """route that queries for all posts and then returns them in JSON"""
-    print("WE WERE HERE!!!")
+
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
-    print(all_posts)
-    view_posts = [post.to_dict() for post in all_posts]
-    print("all posts", view_posts)
-    return {"posts": view_posts }
+    res_posts = [post.to_dict() for post in all_posts]
+    print("all posts", res_posts)
+    return {"posts": res_posts }
 
 
 @post_routes.route("/<int:id>")
 def get_post_by_id(id):
     """return a single post by its id"""
     one_post = Post.query.get(id)
-    # one_post = [post for post in seed_posts if post["id"] == id]
     print(one_post)
     return render_template("feed.html", posts=[one_post])
 
 
 
-@post_routes.route("/new", methods=["GET", "POST"])
+@post_routes.route("/new", methods=["POST"])
+@login_required
 def create_new_post():
-    """render an empty form on get requests, validates and submits form on post requests"""
+    """validates and submits form on post requests"""
 
     form = PostForm()
-    form.author.choices = [ (user.id, user.username) for user in User.query.all() ]
-    print(form.author.choices)
+    # takes the CSRF Token from the request's cookie and adds it to the 
+    # formData object to pass validate on submut
+    form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
         selected_user = User.query.get(form.data["author"])
@@ -50,7 +51,6 @@ def create_new_post():
         print(new_post)
         db.session.add(new_post)
         db.session.commit()
-        flash(f"New Post Created by {selected_user.username}!")
         return redirect("/posts/all")
 
     if form.errors:

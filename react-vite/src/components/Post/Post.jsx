@@ -1,4 +1,3 @@
-
 import { useSelector } from "react-redux";
 import { FaHeart, FaRegHeart, FaRegComment, FaEdit, FaTrashAlt } from "react-icons/fa";
 import "./Post.css"
