@@ -1,5 +1,5 @@
 import boto3
-import botocore
+import botocore187
 import os
 import uuid
 
@@ -28,7 +28,6 @@ def upload_file_to_s3(file, acl="public-read"):
             file.filename,
             ExtraArgs={
                 "ACL": acl,
-                "ContentType": file.content_type
             }
         )
     except Exception as e:

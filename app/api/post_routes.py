@@ -27,7 +27,6 @@ def get_post_by_id(id):
     return render_template("feed.html", posts=[one_post])
 
 
-
 @post_routes.route("/new", methods=["POST"])
 @login_required
 def create_new_post():
@@ -47,7 +46,7 @@ def create_new_post():
             image=form.data["image"],
             post_date=date.today(),
             user=selected_user,
-        )
+        )  
         print(new_post)
         db.session.add(new_post)
         db.session.commit()

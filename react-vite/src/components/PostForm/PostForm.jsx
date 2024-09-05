@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
-// import { createNewPost } from "../store/postsReducer"
+import { createNewPost } from '../../redux/postsReducer'// import { createNewPost } from "../store/postsReducer"
 
 
 export default function PostForm () {
@@ -26,7 +26,7 @@ export default function PostForm () {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(image, title, author)
+        console.log(image, title)
         setHasSubmitted(true)
 
         if (Object.values(validationErrors).length) 
@@ -41,13 +41,13 @@ export default function PostForm () {
         formData.append("image", image)
         formData.append("author", sessionUser.id)
 
-        const response = await dispatch(createNewPost(newPopst))
+        const response = await dispatch(createNewPost(formData))
         if (response === true) {
             setTitle("")
             setImage("")
             navigate("/feed")
         } else {
-            console.log('ERROR RESPONSE', error)
+            console.log('ERROR RESPONSE', response)
             setValidationErrors(response)
         }
     }
