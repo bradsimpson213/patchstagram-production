@@ -1,6 +1,7 @@
 
 const GET_POSTS = "postsState/get_posts"
-const CREATE_POST = 'postsState/create_post'
+const CREATE_POST = "postsState/create_post"
+const DELETE_POST = "postState/delete_post"
 
 // ACTION CREATORS
 export const getPosts = (posts) => ({
@@ -13,6 +14,10 @@ export const createPost = (post) => ({
     post
 })
 
+export const deletePost = (postId) => ({
+    type: DELETE_POST,
+    postId
+})
 
 // THUNKS
 export const getAllPosts = () => async (dispatch) => {
@@ -31,10 +36,6 @@ export const getAllPosts = () => async (dispatch) => {
 export const createNewPost = (post) => async (dispatch) => {
     const response = await fetch("/api/posts/new",{
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-        },
         body: post
     })
 
@@ -49,6 +50,8 @@ export const createNewPost = (post) => async (dispatch) => {
         return error
     }
 }
+
+
 
 // REDUCER
 const initialState = { }

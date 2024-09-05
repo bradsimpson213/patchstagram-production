@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, flash
+from flask import Blueprint, flash, request
 from ..forms.post_form import PostForm
 from flask_login import login_required, current_user
 from datetime import date
@@ -39,11 +39,7 @@ def create_new_post():
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
-        
-        # selected_user = User.query.get(form.data["author"])
-        selected_user = current_user  # cam remove after testing
-        print(selected_user)
-
+   
         image = form.data["image"]
         # generates a unique filename for AWS storage
         image.filename = get_unique_filename(image.filename)
@@ -58,7 +54,7 @@ def create_new_post():
             caption=form.data["caption"],
             image=upload["url"],
             post_date=date.today(),
-            user=selected_user,
+            user=current_user,
         )
 
         print(new_post)
@@ -72,7 +68,7 @@ def create_new_post():
         return form.errors, 401
 
 
-    return render_template("post_form.html", form=form, errors=None)
+    return {"error": "Unexpected server error"}, 500
 
 
 
