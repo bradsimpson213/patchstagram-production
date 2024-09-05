@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from datetime import date
 from random import randint
 from ..models import db, Post, User
+from .AWS_helpers import upload_file_to_s3, remove_file_from_s3, get_unique_filename
 
 
 post_routes = Blueprint('posts', __name__)
@@ -38,23 +39,38 @@ def create_new_post():
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
-        selected_user = User.query.get(form.data["author"])
+        
+        # selected_user = User.query.get(form.data["author"])
+        selected_user = current_user  # cam remove after testing
         print(selected_user)
 
+        image = form.data["image"]
+        # generates a unique filename for AWS storage
+        image.filename = get_unique_filename(image.filename)
+        # sends image to AWS for storage
+        upload = upload_file_to_s3(image)
+        print("UPLOAD", upload)
+        
+        if "url" not in upload:
+            return {"error": upload }
+      
         new_post = Post(
             caption=form.data["caption"],
-            image=form.data["image"],
+            image=upload["url"],
             post_date=date.today(),
             user=selected_user,
-        )  
+        )
+
         print(new_post)
+
         db.session.add(new_post)
         db.session.commit()
-        return redirect("/posts/all")
+        return { "resPost": new_post.to_dict() }
 
     if form.errors:
         print(form.errors)
-        return render_template("post_form.html", form=form, errors=form.errors)
+        return form.errors, 401
+
 
     return render_template("post_form.html", form=form, errors=None)
 
