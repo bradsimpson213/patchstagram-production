@@ -51,7 +51,16 @@ export const createNewPost = (post) => async (dispatch) => {
     }
 }
 
+export const deletePostThunk = (id) => async (dispatch) => {
+    const response = await fetch(`/api/posts/delete/${id}`)
 
+    if (response.ok) {
+        dispatch(deletePost(id))
+    } else {
+        const error = await response.json()
+        console.log("DElPost ERROR", error)
+    }
+}
 
 // REDUCER
 const initialState = { }
@@ -69,6 +78,12 @@ const postsReducer = (state=initialState, action) => {
             newState = { ...state }
             newState[action.post.id] = action.post
             console.log("CREATEPOST", newState )
+            return newState
+
+        case DELETE_POST:
+            newState = {...state}
+            delete newState[action.postId]
+            console.log(`DELETEPOST-${action.postId}`, newState )
             return newState
            
         default:

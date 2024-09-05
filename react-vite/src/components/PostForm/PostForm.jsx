@@ -26,7 +26,7 @@ export default function PostForm () {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(image, title)
+        console.log(image.filename, title)
         setHasSubmitted(true)
 
         if (Object.values(validationErrors).length) 

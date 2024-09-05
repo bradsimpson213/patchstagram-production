@@ -111,11 +111,19 @@ def delete_post(id):
     """will delete a given post by its ID"""
     # post_to_delete = [post for post in seed_posts if post["id"] == id]
     post_to_delete = Post.query.get(id)
-    saved_username = post_to_delete.user.username
+   
     print(post_to_delete)
-    if post_to_delete:
-        db.session.delete(post_to_delete)
-        db.session.commit()
-        flash(f"{saved_username} deleted a post!")
+    if post_to_delete and current_user.id == post_to_delete.user.id:
 
-    return redirect("/posts/all")
+        #  remove_file_from_s3 returns a boolean on if the image was successfully deleted
+        file_to_delete = remove_file_from_s3(post_to_delete.image)
+
+        if file_to_delete:
+            print("file_to_delete", file_to_delete)
+
+            db.session.delete(post_to_delete)
+            db.session.commit()
+            return { "deleted": True }
+        
+        else:
+            return { "error": "Post delete failed" }, 500
