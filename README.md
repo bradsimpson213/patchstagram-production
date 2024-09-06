@@ -7,7 +7,7 @@
 
 ### TODO
 - finish post CRUD
-- AWS for profile images too
+- AWS for profile images too (on sign up form)
 - demouser image (patch image)
 - images table
 - likes CRU
@@ -21,6 +21,7 @@
 - public feed private/public post
 - sticky footer to bottom, add to all pages
 - memoize feed for preformance
+- why are edit and delete icons different sizes (prolly cause delete is nested 1 level deeper)
 
 
 

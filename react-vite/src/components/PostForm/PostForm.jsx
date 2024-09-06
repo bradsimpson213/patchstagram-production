@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { createNewPost } from '../../redux/postsReducer'// import { createNewPost } from "../store/postsReducer"
-
+import "./PostForm.css"
 
 export default function PostForm () {
     const dispatch = useDispatch()
@@ -26,7 +26,7 @@ export default function PostForm () {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(image.filename, title)
+        // console.log(image.filename, title)
         setHasSubmitted(true)
 
         if (Object.values(validationErrors).length) 
@@ -54,39 +54,50 @@ export default function PostForm () {
 
 
     return (
-        <div className="feed-container">
-            <h2>Create Post </h2>
+        <div className="postform-container">
+            <h2 className="postform-title">Create a Post</h2>
             <form 
                 onSubmit={ handleSubmit }
                 encType="multipart/form-data"
+                className="postform-form"
             >
-                <div>
-                    <label htmlFor="title">Title:</label>
-                    <input 
-                        id="title"
+              
+                <label className="postform-label">
+                    Post Caption:
+                    <textarea 
+                        className='postform-input'
                         type="text"
                         value={ title }
                         onChange={ function (e) {setTitle(e.target.value)}}
-                        placeholder='Title'
+                        placeholder='Post Caption'
                     />
-                </div>
+                    <span className='caption-counter'>{title.length}/250</span>
+                </label>
                 <div style={{ color: "red"}}>
                     { hasSubmitted && validationErrors.title }
-                </div>
-                <div>
-                    <label htmlFor="image">Image File:</label>
-                    <input 
-                        id="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={ (e) => setImage(e.target.files[0])}
-                        placeholder='Image URL'
-                    />
-                </div>
+                </div >
+                <label 
+                    htmlFor="image" 
+                    className="postform-label">
+                    Image File:
+                </label>
+                <input 
+                    id="image"
+                    type="file"
+                    accept="image/*"
+                    className="postform-image-input"
+                    onChange={ (e) => setImage(e.target.files[0])}
+                    placeholder='Image URL'
+                />
                 <div style={{ color: "red"}}>
                     { hasSubmitted && validationErrors.image }
                 </div>
-                <button>Submit</button>
+                <button 
+                className="postform-button"
+                type="submit"
+                >
+                    Create Post
+                </button>
             </form>
            
         </div>
