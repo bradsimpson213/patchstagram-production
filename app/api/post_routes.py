@@ -73,13 +73,15 @@ def create_new_post():
 
 
 
-@post_routes.route("/update/<int:id>", methods=["GET", "POST"])
+@post_routes.route("/update/<int:id>", methods=["PATCH"])
+@login_required
 def update_post(id):
     """"will generate an update post form on get requests and 
     validate/save on post requests"""
 
     form = PostForm()
-    form.author.choices = [ (user.id, user.username) for user in User.query.all() ]
+
+    form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
         post_to_update = Post.query.get(id)
@@ -107,6 +109,7 @@ def update_post(id):
 
 
 @post_routes.route("/delete/<int:id>")
+@login_required
 def delete_post(id):
     """will delete a given post by its ID"""
     # post_to_delete = [post for post in seed_posts if post["id"] == id]

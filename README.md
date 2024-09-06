@@ -7,7 +7,7 @@
 
 ### TODO
 - finish post CRUD
-- AWS for profile images
+- AWS for profile images too
 - demouser image (patch image)
 - images table
 - likes CRU
@@ -15,12 +15,11 @@
 - more seed data (fun)
 - follower/following
 - User info/admin page
-- aws setup (move all images?)
-- aws remove route logic to only delete AWS hosted images not Cloudinary seeded (or seeded boolean on images?)
+- how to handle seed images in AWS (add a boolean)
 - neat image carousel on posts (that auto cycles)
 - add theme boolean to user to store theme
 - public feed private/public post
--sticky footer to bottom, add to all pages
+- sticky footer to bottom, add to all pages
 - memoize feed for preformance
 
 

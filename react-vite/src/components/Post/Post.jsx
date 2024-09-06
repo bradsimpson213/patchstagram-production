@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { FaHeart, FaRegHeart, FaRegComment, FaEdit, FaTrashAlt } from "react-icons/fa";
 import { deletePostThunk } from "../../redux/postsReducer";
+import OpenModalButton from "../OpenModalButton"
+import ConfirmPostDelete from "../ConfirmPostDelete/ConfirmPostDelete";
 import "./Post.css"
 
 
@@ -59,9 +61,9 @@ export default function Post ({ data })  {
                     ?
                         <div className="post-editdelete-container">
                             <FaEdit />
-                            <FaTrashAlt
-                                onClick={ (e) => handleDelete(e) }
-                            />
+                            <OpenModalButton 
+                                buttonText={<FaTrashAlt />}
+                                modalComponent={ <ConfirmPostDelete postId={ id } />}/>
                         </div>
                     : 
                         null 
