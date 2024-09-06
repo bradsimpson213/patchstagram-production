@@ -18,6 +18,7 @@ export default function PostForm () {
     useEffect( () => {
         const errors = {}
         if (!title.length) errors.title = "Please enter a post title!"
+        if (title.length > 250) errors.title = "Caption can't be over 250 characters!"
         if (!image) errors.image = "Please provide an image url!"
         setValidationErrors(errors)
     }, [title, image])
@@ -29,6 +30,7 @@ export default function PostForm () {
         // console.log(image.filename, title)
         setHasSubmitted(true)
 
+        // need to implement a return here and maybe custom modal 
         if (Object.values(validationErrors).length) 
         return alert(`The following errors were found:
         ${validationErrors.title ? "* " + validationErrors.title : ""}

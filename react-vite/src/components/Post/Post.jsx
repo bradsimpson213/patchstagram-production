@@ -1,22 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaHeart, FaRegHeart, FaRegComment, FaEdit, FaTrashAlt } from "react-icons/fa";
-import { deletePostThunk } from "../../redux/postsReducer";
+
 import OpenModalButton from "../OpenModalButton"
 import ConfirmPostDelete from "../ConfirmPostDelete/ConfirmPostDelete";
 import "./Post.css"
 
 
 export default function Post ({ data })  {
-    const dispatch = useDispatch()
     const { id, caption, user, image, postDate, likes } = data
     const sessionUser = useSelector((state) => state.session.user);
     console.log("LIKES",likes)
     console.log("CUID", sessionUser.id)
-
-    const handleDelete = (e) => {
-        e.preventDefault()
-        dispatch(deletePostThunk(id))
-    }
 
     return (
         <div className={`post-container`}>
