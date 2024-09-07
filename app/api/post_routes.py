@@ -1,11 +1,12 @@
 from flask import Blueprint, flash, request
 from ..forms.post_form import PostForm
 from flask_login import login_required, current_user
+from flask_wtf.csrf import validate_csrf
 from datetime import date
 from random import randint
 from ..models import db, Post, User
 from .AWS_helpers import upload_file_to_s3, remove_file_from_s3, get_unique_filename
-
+import os
 
 post_routes = Blueprint('posts', __name__)
 
@@ -130,3 +131,17 @@ def delete_post(id):
         
         else:
             return { "error": "Post delete failed" }, 500
+
+
+
+@post_routes.route("/like/<int:id>")
+@login_required
+def likes(id):
+    """route to hande liking/unliking a post"""
+
+    if validate_csrf(request.cookies["csrf_token"], secret_key=os.environ.get('SECRET_KEY')):
+        print("YAY WE GOT HERE")
+        post_to_like = Post.query.get(id)
+        print(post_to_like)
+
+        return "BITCHEN", 200
