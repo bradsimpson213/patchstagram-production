@@ -113,7 +113,8 @@ def update_post(id):
 @login_required
 def delete_post(id):
     """will delete a given post by its ID"""
-    # post_to_delete = [post for post in seed_posts if post["id"] == id]
+
+    
     post_to_delete = Post.query.get(id)
    
     print(post_to_delete)
@@ -139,9 +140,8 @@ def delete_post(id):
 def likes(id):
     """route to hande liking/unliking a post"""
 
-    if validate_csrf(request.cookies["csrf_token"], secret_key=os.environ.get('SECRET_KEY')):
-        print("YAY WE GOT HERE")
-        post_to_like = Post.query.get(id)
-        print(post_to_like)
+     
+    post_to_like = Post.query.get(id)
+    print(post_to_like.post_likes)
 
-        return "BITCHEN", 200
+    return "BITCHEN", 200

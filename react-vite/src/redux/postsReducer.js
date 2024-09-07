@@ -2,6 +2,7 @@
 const GET_POSTS = "postsState/get_posts"
 const CREATE_POST = "postsState/create_post"
 const DELETE_POST = "postState/delete_post"
+const UPDATE_LIKES = "postState/update_post"
 
 // ACTION CREATORS
 export const getPosts = (posts) => ({
@@ -17,6 +18,11 @@ export const createPost = (post) => ({
 export const deletePost = (postId) => ({
     type: DELETE_POST,
     postId
+})
+
+export const updateLikes = (post) => ({
+    type: UPDATE_LIKES,
+    post
 })
 
 // THUNKS
@@ -61,6 +67,18 @@ export const deletePostThunk = (id) => async (dispatch) => {
         console.log("DElPost ERROR", error)
     }
 }
+
+export const updateLikesThunk = (postId) => async (dispatch) => {
+    const response = await fetch(`/api/posts/likes/${postId}`)
+
+    if (response.ok) {
+        const { resPost } = await response.json()
+        dispatch(updateLikes(resPost))
+    } else {
+        const error = await response.json()
+        console.log("LIKES ERROR", error)
+    }
+} 
 
 // REDUCER
 const initialState = { }
