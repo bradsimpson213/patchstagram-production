@@ -13,13 +13,12 @@ export default function PostForm () {
     const [validationErrors, setValidationErrors] = useState({})
     const [hasSubmitted, setHasSubmitted] = useState(false)
 
-
     
     useEffect( () => {
         const errors = {}
-        if (!title.length) errors.title = "Please enter a post title!"
+        if (title.length < 5) errors.title = "Caption must be at least 5 characters!"
         if (title.length > 250) errors.title = "Caption can't be over 250 characters!"
-        if (!image) errors.image = "Please provide an image url!"
+        if (!image) errors.image = "Please provide an image file!"
         setValidationErrors(errors)
     }, [title, image])
     
@@ -27,16 +26,16 @@ export default function PostForm () {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // console.log(image.filename, title)
+        // console.log(image.filename, title)mostly re
         setHasSubmitted(true)
 
         // need to implement a return here and maybe custom modal 
-        if (Object.values(validationErrors).length) 
-        return alert(`The following errors were found:
-        ${validationErrors.title ? "* " + validationErrors.title : ""}
-        ${validationErrors.image ? "* " + validationErrors.image : ""}
-        `)
-
+        if (Object.values(validationErrors).length) return
+    
+        // return alert(`The following errors were found:
+        // ${validationErrors.title ? "* " + validationErrors.title : ""}
+        // ${validationErrors.image ? "* " + validationErrors.image : ""}
+        // `)
 
         const formData = new FormData()
         formData.append("caption", title)
@@ -73,11 +72,13 @@ export default function PostForm () {
                         onChange={ function (e) {setTitle(e.target.value)}}
                         placeholder='Post Caption'
                     />
-                    <span className='caption-counter'>{title.length}/250</span>
-                </label>
-                <div style={{ color: "red"}}>
+                    <span className='caption-counter'>
+                        {title.length}/250
+                    </span>
+                <div className="form-error" >
                     { hasSubmitted && validationErrors.title }
                 </div >
+                </label>
                 <label 
                     htmlFor="image" 
                     className="postform-label">
@@ -91,7 +92,7 @@ export default function PostForm () {
                     onChange={ (e) => setImage(e.target.files[0])}
                     placeholder='Image URL'
                 />
-                <div style={{ color: "red"}}>
+                <div className="form-error" >
                     { hasSubmitted && validationErrors.image }
                 </div>
                 <button 

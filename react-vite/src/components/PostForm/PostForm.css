@@ -92,3 +92,9 @@ input[type=file]::file-selector-button {
     color: lightblue;
     border-color: whitesmoke;
   }
+
+
+  .form-error {
+    color: red;
+    font-size: 20px;
+  }
