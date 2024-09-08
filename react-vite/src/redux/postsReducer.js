@@ -31,11 +31,10 @@ export const getAllPosts = () => async (dispatch) => {
 
     if (response.ok) {
         const { posts } = await response.json()
-        console.log("G-A_P Response", posts)
         dispatch(getPosts(posts))
     } else {
-        const error = await response.json()
-        console.log("G-A-P ERROR", error)
+        const errors = await response.json()
+        return errors
     }
 }
 
@@ -73,6 +72,7 @@ export const updateLikesThunk = (postId) => async (dispatch) => {
 
     if (response.ok) {
         const { resPost } = await response.json()
+        console.log("WE GOT A LIKE RESPONSE")
         dispatch(updateLikes(resPost))
     } else {
         const error = await response.json()
@@ -102,6 +102,12 @@ const postsReducer = (state=initialState, action) => {
             newState = {...state}
             delete newState[action.postId]
             console.log(`DELETEPOST-${action.postId}`, newState )
+            return newState
+
+        case UPDATE_LIKES:
+            newState = {...state}
+            // not the best way to do it but will wor
+            newState[action.post.id] = action.post
             return newState
            
         default:

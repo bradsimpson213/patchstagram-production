@@ -21,12 +21,12 @@ def get_all_posts():
     return {"posts": res_posts }
 
 
-@post_routes.route("/<int:id>")
-def get_post_by_id(id):
-    """return a single post by its id"""
-    one_post = Post.query.get(id)
-    print(one_post)
-    return render_template("feed.html", posts=[one_post])
+# @post_routes.route("/<int:id>")
+# def get_post_by_id(id):
+#     """return a single post by its id"""
+#     one_post = Post.query.get(id)
+#     print(one_post)
+#     return render_template("feed.html", posts=[one_post])
 
 
 @post_routes.route("/new", methods=["POST"])
@@ -73,7 +73,7 @@ def create_new_post():
 
 
 
-
+# need to refactor for AWS & react
 @post_routes.route("/update/<int:id>", methods=["PATCH"])
 @login_required
 def update_post(id):
@@ -114,17 +114,15 @@ def update_post(id):
 def delete_post(id):
     """will delete a given post by its ID"""
 
-    
     post_to_delete = Post.query.get(id)
-   
-    print(post_to_delete)
+
     if post_to_delete and current_user.id == post_to_delete.user.id:
 
         #  remove_file_from_s3 returns a boolean on if the image was successfully deleted
         file_to_delete = remove_file_from_s3(post_to_delete.image)
 
         if file_to_delete:
-            print("file_to_delete", file_to_delete)
+            # print("file_to_delete", file_to_delete)
 
             db.session.delete(post_to_delete)
             db.session.commit()
@@ -135,13 +133,22 @@ def delete_post(id):
 
 
 
-@post_routes.route("/like/<int:id>")
+@post_routes.route("/likes/<int:id>")
 @login_required
 def likes(id):
     """route to hande liking/unliking a post"""
 
-     
     post_to_like = Post.query.get(id)
     print(post_to_like.post_likes)
 
-    return "BITCHEN", 200
+    if current_user in post_to_like.post_likes:
+        post_to_like.post_likes.remove(current_user)
+        db.session.commit()
+        print(f"Post {post_to_like.id} UNLIKED!")
+        
+    else:
+        post_to_like.post_likes.append(current_user)
+        db.session.commit()
+        print(f"Post {post_to_like.id} LIKED!")
+        
+    return { "resPost": post_to_like.to_dict() }

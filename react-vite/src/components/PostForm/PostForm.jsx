@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
-import { createNewPost } from '../../redux/postsReducer'// import { createNewPost } from "../store/postsReducer"
+import { createNewPost } from '../../redux/postsReducer'
+import { useThemeContext } from "../../context/ThemeContext";
 import "./PostForm.css"
 
 export default function PostForm () {
@@ -12,8 +13,9 @@ export default function PostForm () {
     const [image, setImage] = useState("")
     const [validationErrors, setValidationErrors] = useState({})
     const [hasSubmitted, setHasSubmitted] = useState(false)
+    const { theme } = useThemeContext()
 
-    
+
     useEffect( () => {
         const errors = {}
         if (title.length < 5) errors.title = "Caption must be at least 5 characters!"
@@ -55,7 +57,7 @@ export default function PostForm () {
 
 
     return (
-        <div className="postform-container">
+        <div className={`postform-container ${theme}`}>
             <h2 className="postform-title">Create a Post</h2>
             <form 
                 onSubmit={ handleSubmit }
@@ -95,6 +97,7 @@ export default function PostForm () {
                 <div className="form-error" >
                     { hasSubmitted && validationErrors.image }
                 </div>
+       
                 <button 
                 className="postform-button"
                 type="submit"
@@ -102,7 +105,6 @@ export default function PostForm () {
                     Create Post
                 </button>
             </form>
-           
         </div>
     )
 }
