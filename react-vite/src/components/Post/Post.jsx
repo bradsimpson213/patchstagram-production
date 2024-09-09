@@ -19,12 +19,12 @@ export default function Post ({ data })  {
 
     return (
         <div className={`post-container ${theme}`}>
-            <div className="post-header">
+            <div className={`post-header ${theme}`}>
                 <div className="user-info">
                     <img
                         src={ user.profilePic }
                         alt="user-profile"
-                        className="profile-image"
+                        className={`profile-image ${theme}`}
                         />
                     <h2>{ user.username }</h2>
                 </div>
