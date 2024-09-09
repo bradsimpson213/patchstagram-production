@@ -50,7 +50,9 @@ export default function Post ({ data })  {
                                 :   <FaRegHeart 
                                         onClick={ (e) => handleLike(e) }
                                     /> 
-                        : <FaRegHeart />
+                        :   <FaRegHeart 
+                                onClick={ (e) => handleLike(e) }
+                            />
                     }
                     { likes.length 
                         ? 
