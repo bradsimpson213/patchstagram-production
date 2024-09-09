@@ -73,8 +73,7 @@
     font-family: IndieFlower;
     font-size: 1.1em;
     padding: 0;
-    margin: 0;
-  
+    margin: 0;  
 }
 
 input[type=file]::file-selector-button {
@@ -84,9 +83,10 @@ input[type=file]::file-selector-button {
     border-radius: 12px;
     font-family: IndieFlower;
     font-size: 1.2em;
-    /* margin-top: 25px;
-    padding: 5px 15px 5px 15px; */
+    margin-top: 15px;
+    /* padding: 5px 15px 5px 15px;  */
   }
+
   
   input[type=file]::file-selector-button:hover {
     color: lightblue;
@@ -99,3 +99,38 @@ input[type=file]::file-selector-button {
     font-size: 20px;
   }
 
+.postform-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.postform-preview-container {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.postform-image-preview {
+    max-height: 200px;
+    max-width: 70%;
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: whitesmoke;
+    border-radius: 12px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.image-input-container {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: whitesmoke;
+    border-radius: 12px;
+}

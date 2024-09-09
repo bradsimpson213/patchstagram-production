@@ -5,12 +5,14 @@ import { createNewPost } from '../../redux/postsReducer'
 import { useThemeContext } from "../../context/ThemeContext";
 import "./PostForm.css"
 
+
 export default function PostForm () {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const sessionUser = useSelector((state) => state.session.user);
     const [title, setTitle] = useState("")
     const [image, setImage] = useState("")
+    const [previewImage, setPreviewImage] = useState("")
     const [validationErrors, setValidationErrors] = useState({})
     const [hasSubmitted, setHasSubmitted] = useState(false)
     const { theme } = useThemeContext()
@@ -26,6 +28,11 @@ export default function PostForm () {
     
     if (!sessionUser) return <Navigate to="/" replace={true} />;
     
+    const handleImage = (e) => {
+        setImage(e.target.files[0])
+        setPreviewImage(URL.createObjectURL(e.target.files[0]))
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         // console.log(image.filename, title)mostly re
@@ -71,7 +78,7 @@ export default function PostForm () {
                         className='postform-input'
                         type="text"
                         value={ title }
-                        onChange={ function (e) {setTitle(e.target.value)}}
+                        onChange={ (e) => setTitle(e.target.value)}
                         placeholder='Post Caption'
                     />
                     <span className='caption-counter'>
@@ -86,18 +93,31 @@ export default function PostForm () {
                     className="postform-label">
                     Image File:
                 </label>
-                <input 
-                    id="image"
-                    type="file"
-                    accept="image/*"
-                    className="postform-image-input"
-                    onChange={ (e) => setImage(e.target.files[0])}
-                    placeholder='Image URL'
-                />
+                <div className='image-input-container'>
+                    <input 
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        className="postform-image-input"
+                        onChange={ (e) => handleImage(e) }
+                        placeholder='Image URL'
+                        />
+                        { previewImage 
+                            ? 
+                                <div className='postform-preview-container'>
+                                    <span>Image Preview: </span>
+                                    <img 
+                                        src={ previewImage }
+                                        className='postform-image-preview' 
+                                    />
+                                </div>
+                            :
+                                <div></div>                        
+                        }
                 <div className="form-error" >
                     { hasSubmitted && validationErrors.image }
                 </div>
-       
+                </div>
                 <button 
                 className="postform-button"
                 type="submit"
