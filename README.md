@@ -8,9 +8,8 @@
 ### TODO
 - finish post CRUD (only update left)
 - AWS for profile images too (on sign up form)
-- demouser image (patch image)
-- images table
 - comments CRUD  (use modal for CU)
+- images table
 - more seed data (fun)
 - follower/following
 - User info/admin page
