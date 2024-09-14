@@ -16,8 +16,8 @@ def get_all_posts():
     """route that queries for all posts and then returns them in JSON"""
 
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
+    print("all posts", all_posts)
     res_posts = [post.to_dict() for post in all_posts]
-    print("all posts", res_posts)
     return {"posts": res_posts }
 
 
@@ -35,9 +35,10 @@ def create_new_post():
     """validates and submits form on post requests"""
 
     form = PostForm()
+    
+    form["csrf_token"].data = request.cookies["csrf_token"]
     # takes the CSRF Token from the request's cookie and adds it to the 
     # formData object to pass validate on submut
-    form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
    
