@@ -71,7 +71,8 @@ def sign_up():
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
-            image=upload["url"],
+            profile_pic=upload["url"],
+            bio=form.data["bio"],
         )
 
         db.session.add(user)
@@ -79,6 +80,7 @@ def sign_up():
         login_user(user)
         return user.to_dict()
 
+    print('FORM ERRORS', form.errors)
     return form.errors, 401
 
 

@@ -40,6 +40,7 @@ class SignUpForm(FlaskForm):
             FileAllowed(list(ALLOWED_EXTENSIONS))
         ]
     )
+    bio = StringField('bio')
     password = StringField('password', 
         validators=[
             DataRequired()

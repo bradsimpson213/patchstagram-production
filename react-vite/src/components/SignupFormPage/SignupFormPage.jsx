@@ -7,18 +7,24 @@ import "./SignupForm.css"
 
 
 function SignupFormPage() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   // const sessionUser = useSelector((state) => state.session.user);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [profileImage, setProfileImage] = useState("");
-  const [bio, setBio] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({});
+  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
+  const [profileImage, setProfileImage] = useState("")
+  const [previewImage, setPreviewImage] = useState("")
+  const [bio, setBio] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [errors, setErrors] = useState({})
 
   // if (sessionUser) return <Navigate to="/" replace={true} />;
+
+  const handleImage = (e) => {
+    setProfileImage(e.target.files[0])
+    setPreviewImage(URL.createObjectURL(e.target.files[0]))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,13 +36,14 @@ function SignupFormPage() {
       });
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
-        email,
-        username,
-        password,
-      })
-    );
+    const newUser = new FormData()
+    newUser.append("email", email)
+    newUser.append("username", username)
+    newUser.append("password", password )
+    newUser.append("image", profileImage )
+    newUser.append("bio", bio )
+
+    const serverResponse = await dispatch(thunkSignup(newUser))
 
     if (serverResponse) {
       setErrors(serverResponse);
@@ -76,16 +83,34 @@ function SignupFormPage() {
           />
         </label>
         {errors.username && <p>{errors.username}</p>}
-        <label className="signup-form-label">
-          Profile Image:
-          <input
-            type="text"
-            value={profileImage}
-            onChange={(e) => setProfileImage(e.target.value)}
-            placeholder="https://my-photo-site.com"
-          />
+        <label 
+          htmlFor="image" 
+          className="signup-form-label">
+          Image File:
         </label>
-        {errors.profileImage && <p>{errors.profileImage}</p>}
+        <div className='image-input-container'>
+          <input 
+              id="image"
+              type="file"
+              accept="image/*"
+              className="postform-image-input"
+              onChange={ (e) => handleImage(e) }
+              placeholder='Image URL'
+          />
+          { previewImage 
+              ? 
+                  <div className='postform-preview-container'>
+                      <span>Image Preview: </span>
+                      <img 
+                          src={ previewImage }
+                          className='postform-image-preview' 
+                      />
+                  </div>
+              :
+                  <div></div>                        
+          }
+          {errors.profileImage && <p>{errors.profileImage}</p>}
+        </div>
         <label className="signup-form-label">
           Biography:
           <textarea
