@@ -84,7 +84,7 @@ input[type=file]::file-selector-button {
     font-family: IndieFlower;
     font-size: 1.2em;
     margin-top: 15px;
-    /* padding: 5px 15px 5px 15px;  */
+    margin-bottom: 10px;
   }
 
   
@@ -104,9 +104,6 @@ input[type=file]::file-selector-button {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-}
-
-.postform-preview-container {
     margin-top: 10px;
     margin-bottom: 0px;
 }

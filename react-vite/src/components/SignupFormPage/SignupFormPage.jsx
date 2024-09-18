@@ -85,15 +85,16 @@ function SignupFormPage() {
         {errors.username && <p>{errors.username}</p>}
         <label 
           htmlFor="image" 
-          className="signup-form-label">
+          className="signup-form-label"
+          style={{ margin: "0px"}}>
           Image File:
         </label>
-        <div className='image-input-container'>
+        <div className='signup-image-input-container'>
           <input 
               id="image"
               type="file"
               accept="image/*"
-              className="postform-image-input"
+              className="signup-image-input"
               onChange={ (e) => handleImage(e) }
               placeholder='Image URL'
           />
