@@ -20,7 +20,7 @@ def seed_users():
     )
 
     user2 = User(
-            username="Blueberry44",
+            username="Blueberry🫐",
             email="blue@aol.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1647912128/Patchstagram/66346842095__0566A55A-DF10-4E86-A59A-F5694436FA4E_wmoi1w.jpg",
             bio="I am a ninja! 🥷🏻",
@@ -36,15 +36,49 @@ def seed_users():
     )
 
     user4 = User(
-            username="Mimi",
+            username="Mimi247",
             email="mimi@gmail.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1684861055/Patchstagram/Mimi2_nzcfiy.png",
             bio="I am Mimi, that is all",
             password="i_m_mimi"
     )
 
+    user5 = User(
+            username="Azriel",
+            email="i_hate_smurfs@gmail.com",
+            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727279962/Patchstagram/smurfs-azrael-logo-D77D928224-seeklogo.com_fw49fg.png",
+            bio="I like eating smurfs...",
+            password="smurfs_R_tasty"
+    )
 
-    all_users = [demo, user1, user2, user3, user4]
+
+    user6 = User(
+            username="Garfield",
+            email="lasagna_lover@aol.com",
+            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727280181/Patchstagram/png-transparent-garfield-odie-cartoon-comics-the-cat-cartoon-thumbnail_gmlmqu.png",
+            bio="I love naps and lasagna...",
+            password="lasagna"
+    )
+
+
+    user7 = User(
+            username="Nermal",
+            email="nermal@gmail.com",
+            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727279924/Patchstagram/image-nermal_ujmoz9.jpg",
+            bio="You probably don't know who I am...",
+            password="nermal_sucks"
+    )
+
+
+    user8 = User(
+            username="JohnWick4",
+            email="wheresmydog@continental.com",
+            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727280018/Patchstagram/34789f5b2f2d9863b2ccf825e1e3080e_aon6ee.jpg",
+            bio="Have you seen my dog?",
+            password="where_is_my_dog"
+    )
+
+    all_users = [demo, user1, user2, user3, user4, user5, user6, user7, user8 ]
     add_users = [db.session.add(user) for user in all_users]
     db.session.commit()
     return all_users
