@@ -66,11 +66,10 @@ def seed_posts(all_users):
         post_likes= sample(all_users, randint(0, len(all_users))),
     )
 
-
-    all_posts = [post1, post2, post3, post4, post5, post6]
+    all_posts = [post1, post2, post3, post4, post5, post6, post7]
     add_posts = [db.session.add(post) for post in all_posts]
     db.session.commit()
-
+    return all_posts
 
 
 def undo_posts():

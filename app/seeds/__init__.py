@@ -1,6 +1,7 @@
 from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .posts import seed_posts, undo_posts
+from .comments import seed_comments, undo_comments
 
 from app.models.db import db, environment, SCHEMA
 
@@ -15,17 +16,20 @@ def seed():
         # Before seeding in production, you want to run the seed undo 
         # command, which will  truncate all tables prefixed with 
         # the schema name 
+        undo_comments()
         undo_posts()
         undo_users()
 
     users = seed_users()
-    seed_posts(users)
-    print("WE WOULD BE SEEDING")
+    posts = seed_posts(users)
+    seed_comments(posts, users)
+    print("SEEDING DB")
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_comments()
     undo_posts()
     undo_users()
-    print("WE WOULD BE DESTROYING ALL OUR DATA")
+    print("DESTROYING ALL OUR DATA")

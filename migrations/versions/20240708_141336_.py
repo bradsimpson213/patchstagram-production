@@ -1,4 +1,4 @@
-"""empty message
+""" create users, posts,  and likes tables
 
 Revision ID: 116cc30003df
 Revises: 

@@ -40,7 +40,11 @@ class User(db.Model, UserMixin):
                 back_populates="post_likes",
     )
 
-
+    user_comments = db.relationship(
+                "Comment",
+                back_populates="user"
+    )
+    
     def to_dict(self, posts=False):
         dict_user = {
             "id": self.id,
