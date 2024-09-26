@@ -42,6 +42,7 @@ class Post(db.Model):
             "image": self.image,
             "postDate": self.post_date.strftime('%b %-d, %Y'),
             "likes": [ user.id for user in self.post_likes ],
-            "user": self.user.to_dict()
+            "comments": [ comment.to_dict() for comment in self.comments ],
+            "user": self.user.to_dict(),
         }
 

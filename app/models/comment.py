@@ -23,4 +23,9 @@ class Comment(db.Model):
     )
 
     def to_dict(self):
-        pass
+        return {
+            "id": self.id,
+            "text": self.text,
+            "date": self.comment_date,
+            "username": self.user.username
+        }

@@ -18,6 +18,7 @@ def get_all_posts():
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
     print("all posts", all_posts)
     res_posts = [post.to_dict() for post in all_posts]
+    # print("POSTS:", res_posts)
     return {"posts": res_posts }
 
 
