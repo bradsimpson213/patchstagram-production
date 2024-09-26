@@ -9,7 +9,8 @@
 - finish post CRUD (only update left)
 - comments CRUD  (use modal for CU)
 - images table
-- more seed data (fun)(azriel, garfield, nermal)(random john wick poster)
+- more seed data - more posts and comments (take out author randomization)
+- random john wick poster...
 - follower/following
 - User info/settings page
 - add theme boolean to user
