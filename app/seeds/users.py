@@ -11,7 +11,7 @@ def seed_users():
             bio="I am the demo user!", 
             password='password')
     
-    user1 = User(
+    patch = User(
             username="Patchenator",
             email="patch_the_cat@gmail.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1647912257/Patchstagram/IMG_3074_ubqe1e.jpg",
@@ -19,7 +19,7 @@ def seed_users():
             password="i_luv_fud"
     )
 
-    user2 = User(
+    blue = User(
             username="Blueberry🫐",
             email="blue@aol.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1647912128/Patchstagram/66346842095__0566A55A-DF10-4E86-A59A-F5694436FA4E_wmoi1w.jpg",
@@ -27,7 +27,7 @@ def seed_users():
             password="cat_ninja"
     )
 
-    user3 = User(
+    brad = User(
             username="brads213",
             email="brad@gmail.com",
             profile_pic="https://ca.slack-edge.com/T03GU501J-USQFVK3GT-941e867a316f-512",
@@ -35,7 +35,7 @@ def seed_users():
             password="i_like_cats"
     )
 
-    user4 = User(
+    mimi = User(
             username="Mimi247",
             email="mimi@gmail.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1684861055/Patchstagram/Mimi2_nzcfiy.png",
@@ -43,7 +43,7 @@ def seed_users():
             password="i_m_mimi"
     )
 
-    user5 = User(
+    azriel = User(
             username="Azriel",
             email="i_hate_smurfs@gmail.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727279962/Patchstagram/smurfs-azrael-logo-D77D928224-seeklogo.com_fw49fg.png",
@@ -52,7 +52,7 @@ def seed_users():
     )
 
 
-    user6 = User(
+    garfield = User(
             username="Garfield",
             email="lasagna_lover@aol.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727280181/Patchstagram/png-transparent-garfield-odie-cartoon-comics-the-cat-cartoon-thumbnail_gmlmqu.png",
@@ -61,7 +61,7 @@ def seed_users():
     )
 
 
-    user7 = User(
+    nermal = User(
             username="Nermal",
             email="nermal@gmail.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727279924/Patchstagram/image-nermal_ujmoz9.jpg",
@@ -70,7 +70,7 @@ def seed_users():
     )
 
 
-    user8 = User(
+    john_wick = User(
             username="JohnWick4",
             email="wheresmydog@continental.com",
             profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727280018/Patchstagram/34789f5b2f2d9863b2ccf825e1e3080e_aon6ee.jpg",
@@ -78,7 +78,7 @@ def seed_users():
             password="where_is_my_dog"
     )
 
-    all_users = [demo, user1, user2, user3, user4, user5, user6, user7, user8 ]
+    all_users = [demo, patch, blue, brad, mimi, azriel, garfield, nermal, john_wick]
     add_users = [db.session.add(user) for user in all_users]
     db.session.commit()
     return all_users
