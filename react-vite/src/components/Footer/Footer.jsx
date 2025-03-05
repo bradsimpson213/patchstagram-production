@@ -12,7 +12,7 @@ export default function Footer () {
                 <Link to="https://github.com/bradsimpson213">
                     <FaGithub />
                 </Link>
-                <Link to="https://www.linkedin.com/in/brad-simpson-a6b1b7b2/">
+                <Link to="'https://www.linkedin.com/in/charles-simpson-a6b1b7b2/">
                     <FaLinkedin />
                 </Link>
                 <Link to="mailto:bradsimpson@icloud.com">
