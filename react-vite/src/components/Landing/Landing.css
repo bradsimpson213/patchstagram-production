@@ -17,13 +17,13 @@
     width: 70vw;
     text-align: center;
     font-weight: 300;
-    font-size: 4rem;
+    font-size: 3.7rem;
     text-shadow: rgb(255, 165, 0) -2px 2px 0px, 
     rgb(255, 165, 0) 2px 2px 0px; 
 }
 
 .landing-image {
-    height: 15em;
+    height: 12em;
 }
 
 .landing-subtitle {
@@ -32,7 +32,7 @@
     width: 60vw;
 
     text-align: center;
-    font-size: 1.7em;
+    font-size: 1.4em;
     margin: 10px;
 }
 
@@ -45,7 +45,7 @@
 
 .landing-link {
     font-family: IndieFlower;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: lightblue;
     text-decoration: underline;
     text-decoration-color: orange;

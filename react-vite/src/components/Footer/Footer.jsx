@@ -8,7 +8,7 @@ export default function Footer () {
     return (
         <>
             <span className="footer">
-                ©Brad Simpson 2024
+                ©Brad Simpson 2025
                 <Link to="https://github.com/bradsimpson213">
                     <FaGithub />
                 </Link>

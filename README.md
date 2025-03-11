@@ -19,7 +19,7 @@
 - DnD for image order for posts
 - public feed private/public post
 - sticky footer to bottom, add to all pages
-- memoize feed for preformance
+- memoize feed for performance
 - default user profile patch with random color background?
 
 
