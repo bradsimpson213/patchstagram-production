@@ -1,5 +1,5 @@
 .navbar-container {
-  height: 7.5vh;
+  height: 8.5vh;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -18,17 +18,18 @@
 }
 
 .navbar-logo {
-  height: 75px;
-  width:  75px;
+  height: 3rem;
+  width:  3rem;
   margin-right: 25px;
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 .navbar-title {
   font-family: Billabong;
   color: lightblue;
   font-weight: 300;
-  font-size: 45px;
+  font-size: 2.5rem;
   text-align: center;
   text-shadow: rgb(255, 165, 0) -1px 1px 0px, 
   rgb(255, 165, 0) 1px 1px 0px; 

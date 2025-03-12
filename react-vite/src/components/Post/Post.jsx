@@ -36,7 +36,7 @@ export default function Post ({ data })  {
                     alt="post-content"
                     className="content-image" 
                 />
-                <h2>{ caption }</h2>
+                <h3>{ caption }</h3>
             </div>
             <div className="post-footer">
                 <div className="post-likecomment-container">

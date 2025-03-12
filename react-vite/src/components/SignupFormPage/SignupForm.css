@@ -13,7 +13,7 @@
 }
 
 .signup-title {
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 .signup-form {
@@ -33,7 +33,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 2em;
+    font-size: 1.6em;
     margin-bottom: 20px;
     width: 70%;
 }
@@ -64,7 +64,7 @@
     border: 2px solid orange;
     border-radius: 12px;
     font-family: IndieFlower;
-    font-size: 2em;
+    font-size: 1.6em;
     margin-top: 25px;
     padding: 5px 15px 5px 15px;
     margin-bottom: 10px;
@@ -73,10 +73,11 @@
 .signup-form-button:hover {
     color: lightblue;
     border-color: whitesmoke;
+    cursor: pointer;
 }
 
 .signup-login-wrapper {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin-top: 20px;
     text-align: center;
     max-width: 400px;

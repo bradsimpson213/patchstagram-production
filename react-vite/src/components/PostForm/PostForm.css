@@ -3,7 +3,7 @@
     width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: rgb(37, 48, 59);
     color: whitesmoke;
@@ -14,7 +14,7 @@
 }
 
 .postform-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 .postform-form {
@@ -34,7 +34,7 @@
     flex-direction: column;
     justify-content: center;
     font-size: 1.6em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 70%;
 }
 
@@ -59,7 +59,7 @@
     border: 2px solid orange;
     border-radius: 12px;
     font-family: IndieFlower;
-    font-size: 1.5em;
+    font-size: 1.3em;
     margin-top: 25px;
     padding: 5px 15px 5px 15px;
 }
@@ -67,6 +67,7 @@
 .postform-button:hover {
     color: lightblue;
     border-color: whitesmoke;
+    cursor: pointer;
 }
 
 .postform-image-input {
@@ -91,6 +92,7 @@ input[type=file]::file-selector-button {
   input[type=file]::file-selector-button:hover {
     color: lightblue;
     border-color: whitesmoke;
+    cursor: pointer;
   }
 
 

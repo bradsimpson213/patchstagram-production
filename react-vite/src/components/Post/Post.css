@@ -9,7 +9,7 @@
 }
 
 .post-header {
-    height: 90px;
+    height: 4em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -18,7 +18,7 @@
     align-items: center;
     padding-right: 10px;
     font-family: IndieFlower;
-    font-size: 1.4em;
+    font-size: 1.2em;
     border-bottom: 2px solid whitesmoke;
     background-color: rgba(173, 216, 230, .2) ;
 }
@@ -52,7 +52,7 @@
     border-width: 1px;
     border-color: whitesmoke;
     border-radius: 45px;
-    margin: 0px 20px 10px 10px;
+    margin: 10px 20px 10px 10px;
 }
 
 .content-image {
