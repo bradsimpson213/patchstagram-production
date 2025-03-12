@@ -5,10 +5,10 @@ import { useThemeContext } from "../../context/ThemeContext";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
+
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
   const { theme } = useThemeContext()
-
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
@@ -36,11 +36,7 @@ function Navigation() {
         >
           New Post
         </NavLink>
-      
-
-      
         <ProfileButton />
-      
     </div>
   );
 }
