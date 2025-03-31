@@ -15,9 +15,10 @@ export default function PostForm () {
     const [previewImage, setPreviewImage] = useState("")
     const [validationErrors, setValidationErrors] = useState({})
     const [hasSubmitted, setHasSubmitted] = useState(false)
+    const [tags, setTags] = useState([])
     const { theme } = useThemeContext()
 
-
+    // useEffect for error messages
     useEffect( () => {
         const errors = {}
         if (title.length < 5) errors.title = "Caption must be at least 5 characters!"
@@ -27,6 +28,31 @@ export default function PostForm () {
     }, [title, image])
     
     if (!sessionUser) return <Navigate to="/" replace={true} />;
+
+    // useEffect for AI Image tags requests
+    useEffect( () => {
+
+        const getAIGenTags = async (previewImage) => {
+            const imageTagForm = new FormData();
+            form.append("image", previewImage)
+
+            const response = await fetch("/api/images/generate_tags",{
+                method: 'POST',
+                body: imageTagForm
+            })
+ 
+            console.log(response)
+
+            // add response ok and error handling
+        }
+
+        if (previewImage === "") {
+            return
+        } else {
+            setTags(getAIGenTags(previewImage))
+        }
+
+    }, [previewImage])
     
     const handleImage = (e) => {
         setImage(e.target.files[0])
@@ -100,7 +126,7 @@ export default function PostForm () {
                         accept="image/*"
                         className="postform-image-input"
                         onChange={ (e) => handleImage(e) }
-                        placeholder='Image URL'
+                        placeholder='Image file'
                         />
                         { previewImage 
                             ? 
