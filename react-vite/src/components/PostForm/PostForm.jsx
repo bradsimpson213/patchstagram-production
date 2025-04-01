@@ -33,17 +33,25 @@ export default function PostForm () {
     useEffect( () => {
 
         const getAIGenTags = async (previewImage) => {
-            const imageTagForm = new FormData();
-            form.append("image", previewImage)
+
+            const formData = new FormData();
+            formData.append("imageTagging", previewImage)
 
             const response = await fetch("/api/images/generate_tags",{
                 method: 'POST',
-                body: imageTagForm
+                body: formData
             })
  
             console.log(response)
 
-            // add response ok and error handling
+            if (response.ok) {
+                const imageTags = await response.json()
+                return imageTags
+            } else {
+                const error = await response.json()
+                console.log("AI TAGGING ERROR", error)
+                return error
+            }
         }
 
         if (previewImage === "") {

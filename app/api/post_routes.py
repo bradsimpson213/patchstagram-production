@@ -58,9 +58,7 @@ def create_new_post():
             post_date=date.today(),
             user=current_user,
         )
-
-        print(new_post)
-
+        
         db.session.add(new_post)
         db.session.commit()
         return { "resPost": new_post.to_dict() }
@@ -68,7 +66,6 @@ def create_new_post():
     if form.errors:
         print(form.errors)
         return form.errors, 401
-
 
     return {"error": "Unexpected server error"}, 500
 
