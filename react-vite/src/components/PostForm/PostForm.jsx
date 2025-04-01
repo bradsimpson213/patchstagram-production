@@ -32,10 +32,10 @@ export default function PostForm () {
     // useEffect for AI Image tags requests
     useEffect( () => {
 
-        const getAIGenTags = async (previewImage) => {
+        const getAIGenTags = async (image) => {
 
             const formData = new FormData();
-            formData.append("imageTagging", previewImage)
+            formData.append("imageTagging", image)
 
             const response = await fetch("/api/images/generate_tags",{
                 method: 'POST',
@@ -57,7 +57,7 @@ export default function PostForm () {
         if (previewImage === "") {
             return
         } else {
-            setTags(getAIGenTags(previewImage))
+            setTags(getAIGenTags(image))
         }
 
     }, [previewImage])
