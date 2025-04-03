@@ -77,6 +77,11 @@
     margin: 0;  
 }
 
+.postform-tags-container {
+    border: 1px solid whitesmoke;
+    border-radius: 12px;
+}
+
 input[type=file]::file-selector-button {
     color: whitesmoke;
     background-color: rgb(37, 48, 59);

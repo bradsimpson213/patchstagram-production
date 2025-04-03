@@ -27,41 +27,46 @@ export default function PostForm () {
         setValidationErrors(errors)
     }, [title, image])
     
-    if (!sessionUser) return <Navigate to="/" replace={true} />;
 
+    // AI Tag Generation API Call
+    const getAIGenTags = async (previewImage) => {
+        
+        const formData = new FormData();
+        formData.append("imageTagging", previewImage)
+        
+        const response = await fetch("/api/images/generate_tags",{
+            method: 'POST',
+            body: formData
+        })
+        
+        if (response.ok) {
+            const imageTags = await response.json()
+            console.log("TAGS FROM SERVER", imageTags)
+            setTags(imageTags)
+            return imageTags
+        } else {
+            const error = await response.json()
+            console.log("AI TAGGING ERROR", error)
+            return error
+        }
+    }
+    
     // useEffect for AI Image tags requests
     useEffect( () => {
-
-        const getAIGenTags = async (image) => {
-
-            const formData = new FormData();
-            formData.append("imageTagging", image)
-
-            const response = await fetch("/api/images/generate_tags",{
-                method: 'POST',
-                body: formData
-            })
- 
-            console.log(response)
-
-            if (response.ok) {
-                const imageTags = await response.json()
-                return imageTags
-            } else {
-                const error = await response.json()
-                console.log("AI TAGGING ERROR", error)
-                return error
-            }
-        }
-
         if (previewImage === "") {
             return
-        } else {
-            setTags(getAIGenTags(image))
-        }
+        } 
+        // use image instead of previewImage since image stores a file, previewImage is a URL for that file
+        getAIGenTags(image)
+        // console.log("TAGS", data)
+        // setTags(data)
+        
+    }, [previewImage, image])
 
-    }, [previewImage])
     
+    if (!sessionUser) return <Navigate to="/" replace={true} />;
+
+
     const handleImage = (e) => {
         setImage(e.target.files[0])
         setPreviewImage(URL.createObjectURL(e.target.files[0]))
@@ -148,10 +153,20 @@ export default function PostForm () {
                             :
                                 <div></div>                        
                         }
-                <div className="form-error" >
-                    { hasSubmitted && validationErrors.image }
+                    <div className="form-error" >
+                        { hasSubmitted && validationErrors.image }
+                    </div>
                 </div>
-                </div>
+                {tags.length ?
+                    <div className='postform-tags-container'>
+                        <h3>Tags</h3>
+                        { tags.map( (tag, index) => (
+                            <p key={index}>{ tag }</p>
+                        ))}
+                    </div>
+                    :
+                    null
+                }
                 <button 
                 className="postform-button"
                 type="submit"
