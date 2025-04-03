@@ -38,7 +38,7 @@ def get_image_tags():
           if result.tags is not None:
                print(" Tags:")
                for tag in result.tags.list:
-                    tagsList.append((tag.name, round(tag.confidence, ndigits=4)))
+                    tagsList.append((tag.name, "{:.2%}".format(round(tag.confidence, ndigits=4)), False))
                     print(f"   '{tag.name}', Confidence {tag.confidence:.4f}")
           print("TAGSLIST", tagsList)
           return tagsList

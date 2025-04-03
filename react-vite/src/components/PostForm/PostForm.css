@@ -78,8 +78,30 @@
 }
 
 .postform-tags-container {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border: 1px solid whitesmoke;
     border-radius: 12px;
+    /* padding: 5px; */
+    line-height: 0.5em;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.tags-table-header {
+    margin-top: 25px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.column {
+    text-align: start;
+    margin: left 100px;
+    text-decoration: underline;
+    margin-bottom: 5px;
 }
 
 input[type=file]::file-selector-button {

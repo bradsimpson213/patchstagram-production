@@ -6,7 +6,7 @@ import { useThemeContext } from "../../context/ThemeContext";
 import "./PostForm.css"
 
 
-export default function PostForm () {
+export default function PostForm() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const sessionUser = useSelector((state) => state.session.user);
@@ -19,26 +19,26 @@ export default function PostForm () {
     const { theme } = useThemeContext()
 
     // useEffect for error messages
-    useEffect( () => {
+    useEffect(() => {
         const errors = {}
         if (title.length < 5) errors.title = "Caption must be at least 5 characters!"
         if (title.length > 250) errors.title = "Caption can't be over 250 characters!"
         if (!image) errors.image = "Please provide an image file!"
         setValidationErrors(errors)
     }, [title, image])
-    
+
 
     // AI Tag Generation API Call
     const getAIGenTags = async (previewImage) => {
-        
+
         const formData = new FormData();
         formData.append("imageTagging", previewImage)
-        
-        const response = await fetch("/api/images/generate_tags",{
+
+        const response = await fetch("/api/images/generate_tags", {
             method: 'POST',
             body: formData
         })
-        
+
         if (response.ok) {
             const imageTags = await response.json()
             console.log("TAGS FROM SERVER", imageTags)
@@ -50,20 +50,19 @@ export default function PostForm () {
             return error
         }
     }
-    
+
     // useEffect for AI Image tags requests
-    useEffect( () => {
+    useEffect(() => {
         if (previewImage === "") {
             return
-        } 
+        }
         // use image instead of previewImage since image stores a file, previewImage is a URL for that file
         getAIGenTags(image)
-        // console.log("TAGS", data)
-        // setTags(data)
-        
+
+
     }, [previewImage, image])
 
-    
+
     if (!sessionUser) return <Navigate to="/" replace={true} />;
 
 
@@ -79,7 +78,7 @@ export default function PostForm () {
 
         // need to implement a return here and maybe custom modal 
         if (Object.values(validationErrors).length) return
-    
+
         // return alert(`The following errors were found:
         // ${validationErrors.title ? "* " + validationErrors.title : ""}
         // ${validationErrors.image ? "* " + validationErrors.image : ""}
@@ -101,75 +100,111 @@ export default function PostForm () {
         }
     }
 
+    const toggleTags = (index) => {
+        const newTags = [...tags]
+        newTags[index][2] = !(newTags[index][2])
+        setTags(newTags)
+    }
 
     return (
         <div className={`postform-container ${theme}`}>
             <h2 className="postform-title">Create a Post</h2>
-            <form 
-                onSubmit={ handleSubmit }
+            <form
+                onSubmit={handleSubmit}
                 encType="multipart/form-data"
                 className="postform-form"
             >
-              
+
                 <label className="postform-label">
                     Post Caption:
-                    <textarea 
+                    <textarea
                         className='postform-input'
                         type="text"
-                        value={ title }
-                        onChange={ (e) => setTitle(e.target.value)}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         placeholder='Post Caption'
                     />
                     <span className='caption-counter'>
                         {title.length}/250
                     </span>
-                <div className="form-error" >
-                    { hasSubmitted && validationErrors.title }
-                </div >
+                    <div className="form-error" >
+                        {hasSubmitted && validationErrors.title}
+                    </div >
                 </label>
-                <label 
-                    htmlFor="image" 
+                <label
+                    htmlFor="image"
                     className="postform-label">
-                    Image File:
+                    Image File: 
                 </label>
                 <div className='image-input-container'>
-                    <input 
+                    <input
                         id="image"
                         type="file"
                         accept="image/*"
                         className="postform-image-input"
-                        onChange={ (e) => handleImage(e) }
+                        onChange={(e) => handleImage(e)}
                         placeholder='Image file'
-                        />
-                        { previewImage 
-                            ? 
-                                <div className='postform-preview-container'>
-                                    <span>Image Preview: </span>
-                                    <img 
-                                        src={ previewImage }
-                                        className='postform-image-preview' 
-                                    />
-                                </div>
-                            :
-                                <div></div>                        
-                        }
+                    />
+                    {previewImage
+                        ?
+                        <div className='postform-preview-container'>
+                            <span>Image Preview: </span>
+                            <img
+                                src={previewImage}
+                                className='postform-image-preview'
+                            />
+                        </div>
+                        :
+                        null
+                    }
                     <div className="form-error" >
-                        { hasSubmitted && validationErrors.image }
+                        {hasSubmitted && validationErrors.image}
                     </div>
                 </div>
                 {tags.length ?
-                    <div className='postform-tags-container'>
-                        <h3>Tags</h3>
-                        { tags.map( (tag, index) => (
-                            <p key={index}>{ tag }</p>
-                        ))}
-                    </div>
+                    <>
+                        <p className="postform-label">Image Tags: </p>
+                        <div id='tags' className='postform-tags-container'>
+                            <table>
+                                <thead className='tags-table-header'>
+                                    <tr>
+                                        <th className='column'></th>
+                                        <th className='column'>Tags</th>
+                                        <th className='column'>Score</th>
+                                    </tr>
+                                </thead>
+                                {tags.map((tag, index) => (
+                                    <tr  key={index}>
+                                        <td>
+                                            <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={tag[2]}
+                                                        onChange={ () => toggleTags(index)}
+                                                    />
+                                            </label>
+                                        </td>
+                                        <td>
+                                            {`${tag[0]}`}
+                                        </td>
+                                        <td>
+                                            {`${tag[1]}`}
+                                        </td>
+                                    </tr>
+                                ))}
+
+                            </table>
+                        </div>
+                
+                    </>
                     :
-                    null
+                    <div>
+                        <h3>Select an Image to Generate AI Tags... </h3>
+                    </div>
                 }
-                <button 
-                className="postform-button"
-                type="submit"
+                <button
+                    className="postform-button"
+                    type="submit"
                 >
                     Create Post
                 </button>
