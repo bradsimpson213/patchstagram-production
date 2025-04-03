@@ -104,6 +104,41 @@
     margin-bottom: 5px;
 }
 
+.column::after
+{
+    content: "";
+    display: block;
+    height: .5em;
+    width: 100%;
+    background: inherit;
+}
+
+.custom-tag-input {
+    background-color: rgb(37, 48, 59);
+    border: 1px solid whitesmoke;
+    border-radius: 12px;
+    color: whitesmoke;
+    width: 60%;
+    height: 30px;
+    text-align: center;
+}
+
+.custom-tag-button {
+    color: whitesmoke;
+    background-color: rgb(37, 48, 59);
+    border: 2px solid orange;
+    border-radius: 12px;
+    font-family: IndieFlower;
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+.custom-tag-button:hover {
+    color: lightblue;
+    border-color: whitesmoke;
+    cursor: pointer;
+}
+
 input[type=file]::file-selector-button {
     color: whitesmoke;
     background-color: rgb(37, 48, 59);

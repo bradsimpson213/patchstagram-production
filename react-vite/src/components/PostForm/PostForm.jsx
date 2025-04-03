@@ -7,16 +7,17 @@ import "./PostForm.css"
 
 
 export default function PostForm() {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user);
-    const [title, setTitle] = useState("")
-    const [image, setImage] = useState("")
-    const [previewImage, setPreviewImage] = useState("")
-    const [validationErrors, setValidationErrors] = useState({})
-    const [hasSubmitted, setHasSubmitted] = useState(false)
-    const [tags, setTags] = useState([])
-    const { theme } = useThemeContext()
+    const [title, setTitle] = useState("");
+    const [image, setImage] = useState("");
+    const [previewImage, setPreviewImage] = useState("");
+    const [validationErrors, setValidationErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+    const [tags, setTags] = useState([]);
+    const [customTag, setCustomTag] = useState("")
+    const { theme } = useThemeContext();
 
     // useEffect for error messages
     useEffect(() => {
@@ -58,8 +59,6 @@ export default function PostForm() {
         }
         // use image instead of previewImage since image stores a file, previewImage is a URL for that file
         getAIGenTags(image)
-
-
     }, [previewImage, image])
 
 
@@ -88,11 +87,13 @@ export default function PostForm() {
         formData.append("caption", title)
         formData.append("image", image)
         formData.append("author", sessionUser.id)
+        formData.append("tags", tags)
 
         const response = await dispatch(createNewPost(formData))
         if (response === true) {
             setTitle("")
             setImage("")
+            setTags([])
             navigate("/feed")
         } else {
             console.log('ERROR RESPONSE', response)
@@ -101,9 +102,17 @@ export default function PostForm() {
     }
 
     const toggleTags = (index) => {
-        const newTags = [...tags]
-        newTags[index][2] = !(newTags[index][2])
-        setTags(newTags)
+        const newTags = [...tags];
+        newTags[index][2] = !(newTags[index][2]);
+        setTags(newTags);
+    }
+
+    const handleCustomTag = (e) => {
+        e.stopPropagation();
+        const newTags = [...tags];
+        newTags.push([customTag, 'Custom', true]);
+        setTags(newTags);
+        setCustomTag("")
     }
 
     return (
@@ -192,10 +201,25 @@ export default function PostForm() {
                                         </td>
                                     </tr>
                                 ))}
-
                             </table>
                         </div>
-                
+                        <div >
+                            <p className="postform-label">Add Custom Tag:</p>
+                            <input
+                                type="text"
+                                value={ customTag }
+                                placeholder="tag name"
+                                onChange={ (e) => setCustomTag(e.target.value) }
+                                className='custom-tag-input'
+                            />
+                            <button 
+                                className="custom-tag-button" 
+                                onClick={ (e) => handleCustomTag(e)}
+                                type="button"
+                            >
+                                Add Tag
+                            </button>
+                        </div>
                     </>
                     :
                     <div>
