@@ -184,7 +184,7 @@ export default function PostForm() {
                                 </thead>
                                 {tags.map((tag, index) => (
                                     <tr  key={index}>
-                                        <td>
+                                        <td className='row'>
                                             <label>
                                                     <input
                                                         type="checkbox"
@@ -193,10 +193,10 @@ export default function PostForm() {
                                                     />
                                             </label>
                                         </td>
-                                        <td>
+                                        <td className='row'>
                                             {`${tag[0]}`}
                                         </td>
-                                        <td>
+                                        <td className='row'>
                                             {`${tag[1]}`}
                                         </td>
                                     </tr>

@@ -1,14 +1,14 @@
 from .db import db, SCHEMA, add_prefix_for_prod, environment
 
 
-class Image(db.model):
-    __tablename__ = 'images'
+class Tag(db.model):
+    __tablename__ = 'tags'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    image_URL = db.Column(db.String(250), nullable=False)
+    tag = db.Column(db.String(250), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     
