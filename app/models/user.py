@@ -30,14 +30,24 @@ class User(db.Model, UserMixin):
 
     # Relationship attributed
     posts = db.relationship(
-                "Post", 
-                back_populates="user",
-            )
+        "Post", 
+        back_populates="user",
+    )
             
     user_likes = db.relationship(
-                "Post",
-                secondary=likes,
-                back_populates="post_likes",
+        "Post",
+        secondary=likes,
+        back_populates="post_likes",
+    )
+
+    user_images = db.relationship(
+        "Image",
+        back_populates="user",
+    )
+
+    user_tags = db.relationship(
+        "Tags",
+        back_populates="user",
     )
 
 

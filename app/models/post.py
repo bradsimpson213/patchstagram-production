@@ -11,19 +11,23 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     caption = db.Column(db.String(250), nullable=False)
     author = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
-    image = db.Column(db.String(250), nullable=False)
     post_date = db.Column(db.Date, nullable=False)
 
     # Relationship attributes
     user = db.relationship(
-                "User", 
-                back_populates="posts",
-            )
+        "User", 
+        back_populates="posts",
+    )
+
+    images = db.relationship(
+        "Image",
+        back_populates="post",
+    )
 
     post_likes = db.relationship(
-                "User",
-                secondary=likes,
-                back_populates="user_likes",
+        "User",
+        secondary=likes,
+        back_populates="user_likes",
     )
 
     def __repr__(self):
