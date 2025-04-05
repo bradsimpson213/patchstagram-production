@@ -38,9 +38,9 @@ class Post(db.Model):
         return {
             "id": self.id,
             "caption": self.caption,
-            "image": self.image,
             "postDate": self.post_date.strftime('%b %d %Y'),
             "likes": [ user.id for user in self.post_likes ],
-            "user": self.user.to_dict()
+            "user": self.user.to_dict(),
+            "images": [ image.to_dict() for image in self.images ]
         }
 

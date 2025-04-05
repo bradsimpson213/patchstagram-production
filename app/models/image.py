@@ -29,3 +29,9 @@ class Image(db.Model):
         secondary=image_tags,
         back_populates="images",
     )
+
+    def to_dict(self):
+        return {
+            "image_URL": self.image_URL,
+            "tags": [tag.tag for tag in self.image_tags]
+    }

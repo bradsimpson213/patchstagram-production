@@ -73,7 +73,7 @@ def seed_users():
     john_wick = User(
             username="JohnWick4",
             email="wheresmydog@continental.com",
-            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1727280018/Patchstagram/34789f5b2f2d9863b2ccf825e1e3080e_aon6ee.jpg",
+            profile_pic="https://res.cloudinary.com/app-academy4/image/upload/v1743875888/Patchstagram/john-wick_mqpv9s.png",
             bio="Have you seen my dog?",
             password="where_is_my_dog"
     )

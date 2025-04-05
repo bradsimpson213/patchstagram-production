@@ -9,7 +9,7 @@ import "./Post.css"
 
 export default function Post ({ data })  {
     const dispatch = useDispatch()
-    const { id, caption, user, image, postDate, likes } = data
+    const { id, caption, user, images, postDate, likes } = data
     const sessionUser = useSelector((state) => state.session.user);
     const { theme } = useThemeContext()
 
@@ -25,17 +25,22 @@ export default function Post ({ data })  {
                         src={ user.profilePic }
                         alt="user-profile"
                         className={`profile-image ${theme}`}
-                        />
+                    />
                     <h2>{ user.username }</h2>
                 </div>
                 <h3>{ postDate }</h3>
             </div>
             <div className="post-body">
                 <img 
-                    src={ image } 
+                    src={ images[0].image_URL } 
                     alt="post-content"
                     className="content-image" 
                 />
+                <div className="tags-container">
+                    { images[0].tags.map( tag => (
+                        <span className="tag-detail">{`#${tag} `}</span>
+                    ))}
+                </div>
                 <h3>{ caption }</h3>
             </div>
             <div className="post-footer">
