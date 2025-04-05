@@ -46,7 +46,7 @@ class User(db.Model, UserMixin):
     )
 
     user_tags = db.relationship(
-        "Tags",
+        "Tag",
         back_populates="user",
     )
 

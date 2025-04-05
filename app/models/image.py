@@ -20,7 +20,7 @@ class Image(db.Model):
     )
 
     post = db.relationship(
-        "Image",
+        "Post",
         back_populates="images"
     )
 
