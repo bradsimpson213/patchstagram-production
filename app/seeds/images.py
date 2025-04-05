@@ -50,6 +50,7 @@ def seed_images(all_posts):
     all_images = [image1, image2, image3, image4, image5, image6, image7]
     _ = [db.session.add(image) for image in all_images]
     db.session.commit()
+    return all_images
 
 
 def undo_images():
