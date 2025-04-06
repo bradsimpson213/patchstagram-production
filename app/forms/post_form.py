@@ -18,3 +18,4 @@ class PostForm(FlaskForm):
             FileAllowed(list(ALLOWED_EXTENSIONS))
         ]
     )
+    tags = StringField("Tags")
