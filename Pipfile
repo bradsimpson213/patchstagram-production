@@ -33,6 +33,7 @@ urllib3 = "==1.26.19"
 werkzeug = "==2.2.2"
 wtforms = "==3.0.1"
 zipp = "==3.17.0"
+azure-ai-vision-imageanalysis = "*"
 
 [dev-packages]
 
