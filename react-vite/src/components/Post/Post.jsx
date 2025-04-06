@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FaHeart, FaRegHeart, FaRegComment, FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useThemeContext } from "../../context/ThemeContext";
@@ -7,7 +8,7 @@ import ConfirmPostDelete from "../ConfirmPostDelete/ConfirmPostDelete";
 import "./Post.css"
 
 
-export default function Post ({ data })  {
+const Post = React.memo(function Post ({ data })  {
     const dispatch = useDispatch()
     const { id, caption, user, image, postDate, likes } = data
     const sessionUser = useSelector((state) => state.session.user);
@@ -77,5 +78,7 @@ export default function Post ({ data })  {
             </div>
         </div>
     )
-}
+})
+
+export default Post;
 

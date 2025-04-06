@@ -20,7 +20,7 @@ def seed():
 
     users = seed_users()
     seed_posts(users)
-    print("WE WOULD BE SEEDING")
+    print("WE JUST SEEDING")
 
 
 # Creates the `flask seed undo` command
@@ -28,4 +28,4 @@ def seed():
 def undo():
     undo_posts()
     undo_users()
-    print("WE WOULD BE DESTROYING ALL OUR DATA")
+    print("WE DESTROYED ALL OUR DATA")
