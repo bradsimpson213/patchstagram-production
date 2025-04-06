@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
 from datetime import date
 from random import randint
-from ..models import db, Post, User
+from ..models import db, Post, User, Image, Tag
 from .AWS_helpers import upload_file_to_s3, remove_file_from_s3, get_unique_filename
 import os
 
@@ -17,7 +17,7 @@ def get_all_posts():
 
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
     res_posts = [post.to_dict() for post in all_posts]
-    print("posts", res_posts)
+    print("posts", all_posts)
     return {"posts": res_posts }
 
 
@@ -41,22 +41,58 @@ def create_new_post():
     # formData object to pass validate on submut
 
     if form.validate_on_submit():
-   
+
+        # HANDLE TAGS
+        tag_string = form.data["tags"]
+        tags = tag_string.split(',')
+        print("TAGS", tags)
+
+        all_tags_objects = Tag.query.all()
+        all_tags = [tag.tag for tag in all_tags_objects]
+        post_tags = []
+
+        # iterate through tags, making new if they don't exist
+        for tag in tags:
+            if tag not in all_tags:
+                new_tag = Tag(
+                    tag=tag,
+                    user=current_user,
+                )
+                db.session.add(new_tag)
+                db.session.commit()
+                post_tags.append(new_tag)
+            else:
+                found_tag = Tag.query.filter_by(tag=tag).one()
+                post_tags.append(found_tag)
+
+        print("TAG OBJS", post_tags)
+
+        # HANDLE IMAGE
         image = form.data["image"]
         # generates a unique filename for AWS storage
         image.filename = get_unique_filename(image.filename)
         # sends image to AWS for storage
+
         upload = upload_file_to_s3(image)
         print("UPLOAD", upload)
         
         if "url" not in upload:
             return {"error": upload }
-      
+        
+        new_image = Image(
+            image_URL=upload["url"],
+            user=current_user,
+            image_tags=post_tags,
+        )
+        db.session.add(new_image)
+        db.session.commit()
+
+        # HANDLE POST
         new_post = Post(
             caption=form.data["caption"],
-            image=upload["url"],
             post_date=date.today(),
             user=current_user,
+            images=[new_image],
         )
         
         db.session.add(new_post)
@@ -134,7 +170,7 @@ def delete_post(id):
 @post_routes.route("/likes/<int:id>")
 @login_required
 def likes(id):
-    """route to hande liking/unliking a post"""
+    """route to handle liking/un-liking a post"""
 
     post_to_like = Post.query.get(id)
     print(post_to_like.post_likes)

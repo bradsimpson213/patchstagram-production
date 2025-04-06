@@ -37,8 +37,8 @@ export default function Post ({ data })  {
                     className="content-image" 
                 />
                 <div className="tags-container">
-                    { images[0].tags.map( tag => (
-                        <span className="tag-detail">{`#${tag} `}</span>
+                    { images[0].tags.map( (tag, index) => (
+                        <span key={ index } className="tag-detail">{`#${tag} `}</span>
                     ))}
                 </div>
                 <h3>{ caption }</h3>

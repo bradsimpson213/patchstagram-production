@@ -82,12 +82,19 @@ export default function PostForm() {
         // ${validationErrors.title ? "* " + validationErrors.title : ""}
         // ${validationErrors.image ? "* " + validationErrors.image : ""}
         // `)
-
+        const selectedTags = []
+        for (const tag of tags) {
+            if(tag[2]){
+                selectedTags.push(tag[0])
+            }
+        }
+        console.log("Selected Tags", selectedTags)
+        
         const formData = new FormData()
         formData.append("caption", title)
         formData.append("image", image)
         formData.append("author", sessionUser.id)
-        formData.append("tags", tags)
+        formData.append("tags", selectedTags)
 
         const response = await dispatch(createNewPost(formData))
         if (response === true) {

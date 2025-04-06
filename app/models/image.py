@@ -13,7 +13,7 @@ class Image(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("posts.id")))
 
 
-    # Relationship attributed
+    # Relationship attributes
     user = db.relationship(
         "User",
         back_populates="user_images"

@@ -22,3 +22,6 @@ class Tag(db.Model):
         secondary=image_tags,
         back_populates="image_tags"
     )
+
+    def __repr__(self):
+        return f"< Tag id: {self.id} Tag: {self.tag} >"
