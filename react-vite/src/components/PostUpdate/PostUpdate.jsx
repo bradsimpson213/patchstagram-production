@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
-// import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updatePost } from '../../redux/postsReducer'
+import { useModal } from '../../context/Modal';
 import "./PostUpdate.css";
 
 
 export default function PostUpdate({data}) {
     const [id, caption, images] = data
-    console.log(id, caption, images)
+    const { closeModal } = useModal();
+    const dispatch = useDispatch();
+    const sessionUser = useSelector((state) => state.session.user);
     const [currentCaption, setCurrentCaption] = useState(caption)
     const [currentImageURL, setImageURL] = useState(images[0].image_URL)
     const [newImage, setNewImage] = useState("");
@@ -49,7 +53,35 @@ export default function PostUpdate({data}) {
         setCustomTag("")
     }
 
-    const handleUpdatePost = () => {
+    const handleUpdatePost = async (e) => {
+        e.preventDefault()
+
+        // prepare tage for server
+        const selectedTags = []
+        for (const tag of currentTags) {
+            if(tag[1]){
+                selectedTags.push(tag[0])
+            }
+        }
+        console.log("Selected Tags", selectedTags)
+        console.log("ID", id)
+        const formData = new FormData()
+        formData.append("caption", currentCaption)
+        formData.append("image", newImage)
+        formData.append("author", sessionUser.id)
+        formData.append("tags", currentTags)
+
+        const response = await dispatch(updatePost(formData, id))
+        if (response === true) {
+            setCurrentCaption("")
+            setImageURL("")
+            setCurrentTags([])
+            // close modal
+            closeModal()
+        } else {
+            console.log('ERROR RESPONSE', response)
+
+        }
 
     }
 
@@ -123,7 +155,7 @@ export default function PostUpdate({data}) {
                             <div id='tags' className='post-update-input'>
                                 <table>
                                     {currentTags.map((tag, index) => (
-                                        <tr  key={index}>
+                                        <tr  key={ index }>
                                             <td className='row-tag'>
                                                 <label>
                                                         <input
@@ -140,7 +172,7 @@ export default function PostUpdate({data}) {
                                     ))}
                                 </table>
                             </div>
-                            <label className="post-update-label">
+                            <label className="post-update-label" style={{marginTop: "10px"}}>
                                 Add Tag:
                             </label>
                             <div className="update-customtag-container">

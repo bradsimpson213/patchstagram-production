@@ -120,27 +120,52 @@ def update_post(id):
 
     if form.validate_on_submit():
         post_to_update = Post.query.get(id)
-        selected_user = User.query.get(form.data["author"])
+        print(post_to_update)
+        return "SUCCESS!"
+    
+        # HANDLE TAGS (before images because they get attached to an image)
 
-        post_to_update.user = selected_user
-        post_to_update.caption = form.data["caption"]
-        post_to_update.image = form.data["image"]
+
+
+        # HANDLE IMAGE
+        image = form.data["image"]
+        # generates a unique filename for AWS storage
+        image.filename = get_unique_filename(image.filename)
+        # sends image to AWS for storage
+
+        upload = upload_file_to_s3(image)
+        print("UPLOAD", upload)
+        
+        if "url" not in upload:
+            return {"error": upload }
+        
+        new_image = Image(
+            image_URL=upload["url"],
+            user=current_user,
+            image_tags=post_tags,
+        )
+        db.session.add(new_image)
         db.session.commit()
-        flash(f"Post {post_to_update.id} updated by{selected_user.username}!")
-        return redirect(f"/posts/{id}")    
+
+        #  remove_file_from_s3 returns a boolean on if the image was successfully deleted
+        file_to_delete = remove_file_from_s3(post_to_update.image)
+
+
+        # selected_user = User.query.get(form.data["author"])
+
+        # post_to_update.user = selected_user
+        # post_to_update.caption = form.data["caption"]
+        # post_to_update.image = form.data["image"]
+        # db.session.commit()
 
 
 
-    elif form.errors:
+
+    if form.errors:
         print(form.errors)
-        return render_template("post_form.html", form=form, type="update", id=id, errors=form.errors)
-
-    else:
-        current_data = Post.query.get(id)    
-        print(current_data)
-        form.process(obj=current_data)
-        return render_template("post_form.html", form=form, type="update", id=id, errors=None)
-
+        return form.errors, 401
+    
+    return {"error": "Unexpected server error"}, 500
 
 
 @post_routes.route("/delete/<int:id>")
@@ -157,6 +182,7 @@ def delete_post(id):
 
         if file_to_delete:
             # print("file_to_delete", file_to_delete)
+            # need to think about this cascading to images & eventually comments
 
             db.session.delete(post_to_delete)
             db.session.commit()

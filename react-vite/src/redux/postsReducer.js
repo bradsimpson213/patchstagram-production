@@ -1,6 +1,7 @@
 
 const GET_POSTS = "postsState/get_posts"
 const CREATE_POST = "postsState/create_post"
+const UPDATE_POST = "postsState/update_post"
 const DELETE_POST = "postState/delete_post"
 const UPDATE_LIKES = "postState/update_post"
 
@@ -12,6 +13,11 @@ export const getPosts = (posts) => ({
 
 export const createPost = (post) => ({
     type: CREATE_POST,
+    post
+})
+
+export const udatePost = (post) => ({
+    type: UPDATE_POST,
     post
 })
 
@@ -41,6 +47,24 @@ export const getAllPosts = () => async (dispatch) => {
 export const createNewPost = (post) => async (dispatch) => {
     const response = await fetch("/api/posts/new",{
         method: 'POST',
+        body: post
+    })
+
+    if (response.ok) {
+        const { resPost } = await response.json()
+        console.log("CP Response", resPost)
+        dispatch(createPost(resPost))
+        return true
+    } else {
+        const error = await response.json()
+        console.log("CP ERROR", error)
+        return error
+    }
+}
+
+export const updatePost = (post, id) => async (dispatch) => {
+    const response = await fetch(`/api/posts/update/${id}`,{
+        method: 'PATCH',
         body: post
     })
 
