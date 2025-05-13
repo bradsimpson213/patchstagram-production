@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { createNewPost } from '../../redux/postsReducer'
 import { useThemeContext } from "../../context/ThemeContext";
+import Footer from "../Footer/Footer";
 import "./PostForm.css"
 
 
@@ -240,6 +241,7 @@ export default function PostForm() {
                     Create Post
                 </button>
             </form>
+            <Footer/>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { useThemeContext } from "../../context/ThemeContext";
 import { updateLikesThunk } from "../../redux/postsReducer";
 import OpenModalButton from "../OpenModalButton"
 import ConfirmPostDelete from "../ConfirmPostDelete/ConfirmPostDelete";
+import PostUpdate from "../PostUpdate/PostUpdate";
 import "./Post.css"
 
 
@@ -72,10 +73,14 @@ const Post = React.memo(function Post ({ data })  {
                 { sessionUser.id === user.id 
                     ?
                         <div className="post-editdelete-container">
-                            <FaEdit />
+                            <OpenModalButton 
+                                buttonText={<FaEdit />}
+                                modalComponent={<PostUpdate data={[id, caption, images]} />}
+                            />
                             <OpenModalButton 
                                 buttonText={<FaTrashAlt />}
-                                modalComponent={ <ConfirmPostDelete postId={ id } />}/>
+                                modalComponent={ <ConfirmPostDelete postId={ id } />}
+                            />
                         </div>
                     : 
                         null 

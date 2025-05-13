@@ -8,7 +8,7 @@
     background-color: rgb(37, 48, 59);
     padding: 0px;
     margin: 0px;
-    overflow: scroll;
+    overflow-y: scroll;
     color: whitesmoke;
     padding-bottom: 100px;
     padding-top: 15px;
