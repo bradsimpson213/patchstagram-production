@@ -128,7 +128,15 @@ input[type=file]::file-selector-button {
 
 
 .postupdate-image {
-    height: 75px;
+    max-height: 200px;
+    max-width: 70%;
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: whitesmoke;
+    border-radius: 12px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 
@@ -152,6 +160,13 @@ input[type=file]::file-selector-button {
     justify-content: flex-start;
     margin-top: 10px;
     margin-bottom: 0px;
-    font-size: .75em;
 }
 
+.update-currentimage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}

@@ -95,11 +95,11 @@ export default function PostUpdate({data}) {
                             />
                             {previewImage
                                 ?
-                                <div className='update-previewimage-container'>
+                                <div className='update-currentimage-container'>
                                     <span> New Image Preview: </span>
                                     <img
                                         src={previewImage}
-                                        className='postform-image-preview'
+                                        className='postupdate-image'
                                     />
                                 </div>
                                 :
