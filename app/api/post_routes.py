@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, request
-from ..forms.post_form import PostForm
+from ..forms import PostForm, UpdateForm
 from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
 from datetime import date
@@ -17,7 +17,7 @@ def get_all_posts():
 
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
     res_posts = [post.to_dict() for post in all_posts]
-    print("posts", all_posts)
+    print("posts", res_posts)
     return {"posts": res_posts }
 
 
@@ -114,17 +114,41 @@ def update_post(id):
     """"will generate an update post form on get requests and 
     validate/save on post requests"""
 
-    form = PostForm()
+    form = UpdateForm()
 
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
         post_to_update = Post.query.get(id)
         print(post_to_update)
-        return "SUCCESS!"
     
         # HANDLE TAGS (before images because they get attached to an image)
+        tag_string = form.data["tags"]
+        new_tags = tag_string.split(',')
+        print("TAGS", new_tags)
 
+        print(post_to_update.images[0].image_tags)
+
+
+        for tag in post_to_update.images[0].image_tags:
+            if tag.tag not in new_tags:
+                post_to_update.images[0].image_tag.remove(tag)
+          
+        # iterate through tags, making new if they don't exist
+        for tag in new_tags:
+            if tag not in post_to_update.images[0].image_tag:
+                new_tag = Tag(
+                    tag=tag,
+                    user=current_user,
+                )
+                db.session.add(new_tag)
+                db.session.commit()
+                post_to_update.images[0].image_tag.append(new_tag)
+            else:
+                found_tag = Tag.query.filter_by(tag=tag).one()
+                post_to_update.images[0].image_tag.append(found_tag)
+
+        print("TAG OBJS",post_to_update.images[0].image_tag)
 
 
         # HANDLE IMAGE
@@ -147,16 +171,16 @@ def update_post(id):
         db.session.add(new_image)
         db.session.commit()
 
-        #  remove_file_from_s3 returns a boolean on if the image was successfully deleted
+        # remove_file_from_s3 returns a boolean on if the image was successfully deleted
         file_to_delete = remove_file_from_s3(post_to_update.image)
 
 
-        # selected_user = User.query.get(form.data["author"])
+        selected_user = User.query.get(form.data["author"])
 
-        # post_to_update.user = selected_user
-        # post_to_update.caption = form.data["caption"]
-        # post_to_update.image = form.data["image"]
-        # db.session.commit()
+        post_to_update.user = selected_user
+        post_to_update.caption = form.data["caption"]
+        post_to_update.image = form.data["image"]
+        db.session.commit()
 
 
 
@@ -178,7 +202,8 @@ def delete_post(id):
     if post_to_delete and current_user.id == post_to_delete.user.id:
 
         #  remove_file_from_s3 returns a boolean on if the image was successfully deleted
-        file_to_delete = remove_file_from_s3(post_to_delete.image)
+        print("FILE NAME", post_to_delete.images[0])
+        file_to_delete = remove_file_from_s3(post_to_delete.images[0].image_URL)
 
         if file_to_delete:
             # print("file_to_delete", file_to_delete)

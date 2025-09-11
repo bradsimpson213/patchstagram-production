@@ -12,10 +12,12 @@ class PostForm(FlaskForm):
             Length(min=5, max=250)
         ]
     )
+
     image = FileField("Image File", 
         validators=[
             FileRequired(), 
             FileAllowed(list(ALLOWED_EXTENSIONS))
         ]
     )
+    
     tags = StringField("Tags")

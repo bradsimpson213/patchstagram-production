@@ -12,7 +12,7 @@ export default function PostUpdate({data}) {
     const sessionUser = useSelector((state) => state.session.user);
     const [currentCaption, setCurrentCaption] = useState(caption)
     const [currentImageURL, setImageURL] = useState(images[0].image_URL)
-    const [newImage, setNewImage] = useState("");
+    const [newImage, setNewImage] = useState("none");
     const [previewImage, setPreviewImage] = useState("");
     const [currentTags, setCurrentTags] = useState(tagsArray(images[0].tags))
     const [customTag, setCustomTag] = useState("")
