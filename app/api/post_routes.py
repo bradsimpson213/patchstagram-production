@@ -17,7 +17,7 @@ def get_all_posts():
 
     all_posts = Post.query.order_by(Post.post_date.desc()).all()
     res_posts = [post.to_dict() for post in all_posts]
-    print("posts", res_posts)
+    # print("posts", res_posts)
     return {"posts": res_posts }
 
 
@@ -45,7 +45,7 @@ def create_new_post():
         # HANDLE TAGS
         tag_string = form.data["tags"]
         tags = tag_string.split(',')
-        print("TAGS", tags)
+        # print("TAGS", tags)
 
         all_tags_objects = Tag.query.all()
         all_tags = [tag.tag for tag in all_tags_objects]
@@ -65,7 +65,7 @@ def create_new_post():
                 found_tag = Tag.query.filter_by(tag=tag).one()
                 post_tags.append(found_tag)
 
-        print("TAG OBJS", post_tags)
+        # print("TAG OBJS", post_tags)
 
         # HANDLE IMAGE
         image = form.data["image"]
@@ -74,7 +74,7 @@ def create_new_post():
         # sends image to AWS for storage
 
         upload = upload_file_to_s3(image)
-        print("UPLOAD", upload)
+        # print("UPLOAD", upload)
         
         if "url" not in upload:
             return {"error": upload }
@@ -120,68 +120,114 @@ def update_post(id):
 
     if form.validate_on_submit():
         post_to_update = Post.query.get(id)
-        print(post_to_update)
-    
+
         # HANDLE TAGS (before images because they get attached to an image)
         tag_string = form.data["tags"]
         new_tags = tag_string.split(',')
-        print("TAGS", new_tags)
+        tags_dict = {}
 
-        print(post_to_update.images[0].image_tags)
+        for index, tag in enumerate(new_tags):
+            if index % 2 == 0:
+                try:
+                    tags_dict[tag] = new_tags[index + 1]
+
+                except IndexError:
+                    break
+
+            else:
+                continue
+        
+        print("TAGS DICT", tags_dict)
 
 
-        for tag in post_to_update.images[0].image_tags:
-            if tag.tag not in new_tags:
-                post_to_update.images[0].image_tag.remove(tag)
+        print("CURRENT POST TAGS", post_to_update.images[0].image_tags)
+        # print(post_to_update.images[0].image_tags)
+
+        for key, value in tags_dict.items():
+            if value == "false":
+                # this needs to be a Tag not a string
+                found_tag = Tag.query.filter(Tag.tag == key).one()
+                if found_tag != None:
+                    print("FOUND TAG", found_tag)
+                    print("ALLTAGS", post_to_update.images[0].image_tags)
+                    post_to_update.images[0].image_tags.remove(found_tag)
+                    print("AFTER DELETE", post_to_update.images[0].image_tags)
+                    db.session.commit()
+                
+            elif value == "true":
+                found_tag = Tag.query.filter(Tag.tag == key).first()
+                print("QUERY RESULT", found_tag)
+                if found_tag == None:
+                    new_tag = Tag(
+                        tag = key,
+                        user = current_user,
+                    )
+                    print("NEW TAG", new_tag)
+                    db.session.add(new_tag)
+                    db.session.commit()
+                    post_to_update.images[0].image_tags.append(new_tag)
+                
+                else:
+                    continue
+            else:
+                continue
+            
+
+        # for tag in post_to_update.images[0].image_tags:
+        #     if tag.tag not in tags_dict.keys():
+        #         post_to_update.images[0].image_tags.remove(tag)
           
         # iterate through tags, making new if they don't exist
-        for tag in new_tags:
-            if tag not in post_to_update.images[0].image_tag:
-                new_tag = Tag(
-                    tag=tag,
-                    user=current_user,
-                )
-                db.session.add(new_tag)
-                db.session.commit()
-                post_to_update.images[0].image_tag.append(new_tag)
-            else:
-                found_tag = Tag.query.filter_by(tag=tag).one()
-                post_to_update.images[0].image_tag.append(found_tag)
+        # for tag in new_tags:
+        #     if tag not in post_to_update.images[0].image_tags:
+        #         new_tag = Tag(
+        #             tag=tag,
+        #             user=current_user,
+        #         )
+        #         db.session.add(new_tag)
+        #         db.session.commit()
+        #         post_to_update.images[0].image_tags.append(new_tag)
+        #     else:
+        #         found_tag = Tag.query.filter_by(tag=tag).one()
+        #         post_to_update.images[0].image_tags.append(found_tag)
 
-        print("TAG OBJS",post_to_update.images[0].image_tag)
+        print("FINAL TAG OBJS", post_to_update.images[0].image_tags)
+
+        # print("IMAGE", form.data["image"])
+
+        if form.data["image"] is not None:
+
+            # HANDLE IMAGE
+            image = form.data["image"]
+            # generates a unique filename for AWS storage
+            image.filename = get_unique_filename(image.filename)
+            # sends image to AWS for storage
+
+            upload = upload_file_to_s3(image)
+            print("UPLOAD", upload)
+            
+            if "url" not in upload:
+                return {"error": upload }
+            
+            new_image = Image(
+                image_URL=upload["url"],
+                user=current_user,
+                image_tags= post_to_update.images[0].image_tags,
+            )
+            db.session.add(new_image)
+            db.session.commit()
+
+            # remove_file_from_s3 returns a boolean on if the image was successfully deleted
+            # file_to_delete = remove_file_from_s3(post_to_update.image)
 
 
-        # HANDLE IMAGE
-        image = form.data["image"]
-        # generates a unique filename for AWS storage
-        image.filename = get_unique_filename(image.filename)
-        # sends image to AWS for storage
+       
 
-        upload = upload_file_to_s3(image)
-        print("UPLOAD", upload)
-        
-        if "url" not in upload:
-            return {"error": upload }
-        
-        new_image = Image(
-            image_URL=upload["url"],
-            user=current_user,
-            image_tags=post_tags,
-        )
-        db.session.add(new_image)
-        db.session.commit()
-
-        # remove_file_from_s3 returns a boolean on if the image was successfully deleted
-        file_to_delete = remove_file_from_s3(post_to_update.image)
-
-
-        selected_user = User.query.get(form.data["author"])
-
-        post_to_update.user = selected_user
+        # post_to_update.user = current_user
         post_to_update.caption = form.data["caption"]
         post_to_update.image = form.data["image"]
         db.session.commit()
-
+        return post_to_update.to_dict()
 
 
 

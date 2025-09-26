@@ -26,7 +26,8 @@ def upgrade():
     sa.Column('tag', sa.String(length=250), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('tag')
     )
     op.create_table('images',
     sa.Column('id', sa.Integer(), nullable=False),
