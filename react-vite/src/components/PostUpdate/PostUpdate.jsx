@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updatePost } from '../../redux/postsReducer'
+import { sendUpdatePost } from '../../redux/postsReducer'
 import { useModal } from '../../context/Modal';
 import "./PostUpdate.css";
 
@@ -71,7 +71,7 @@ export default function PostUpdate({data}) {
         formData.append("author", sessionUser.id)
         formData.append("tags", currentTags)
 
-        const response = await dispatch(updatePost(formData, id))
+        const response = await dispatch(sendUpdatePost(formData, id))
         if (response === true) {
             setCurrentCaption("")
             setImageURL("")

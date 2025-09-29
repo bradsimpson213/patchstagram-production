@@ -16,7 +16,7 @@ export const createPost = (post) => ({
     post
 })
 
-export const udatePost = (post) => ({
+export const updatePost = (post) => ({
     type: UPDATE_POST,
     post
 })
@@ -62,7 +62,7 @@ export const createNewPost = (post) => async (dispatch) => {
     }
 }
 
-export const updatePost = (post, id) => async (dispatch) => {
+export const sendUpdatePost = (post, id) => async (dispatch) => {
     const response = await fetch(`/api/posts/update/${id}`,{
         method: 'PATCH',
         body: post
@@ -120,6 +120,12 @@ const postsReducer = (state=initialState, action) => {
             newState = { ...state }
             newState[action.post.id] = action.post
             console.log("CREATEPOST", newState )
+            return newState
+
+        case UPDATE_POST:
+            newState = { ...state }
+            newState[action.post.id] = action.post
+            console.log("UPDATEPOST", newState )
             return newState
 
         case DELETE_POST:

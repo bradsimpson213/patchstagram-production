@@ -227,7 +227,7 @@ def update_post(id):
         post_to_update.caption = form.data["caption"]
         post_to_update.image = form.data["image"]
         db.session.commit()
-        return post_to_update.to_dict()
+        return { "resPost": post_to_update.to_dict() }
 
 
 
